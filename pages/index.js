@@ -1,490 +1,423 @@
-import Head from 'next/head'
-import { useState, useEffect, useRef } from "react";
+import Head from 'next/head';
+import { useState, useEffect, useRef } from 'react';
 
+// ── Tokens ──────────────────────────────────────────────────────
 const C = {
-  bg: "#09090B", surface: "#0F0F11", surface2: "#141416",
-  border: "#1C1C20", borderHover: "#2C2C34",
-  gold: "#E8A020", goldDim: "#E8A02022", goldBorder: "#E8A02035",
-  text: "#F0EDE8", muted: "#606068", mutedMid: "#909098",
-  green: "#34D399", greenDim: "#34D39918",
-  blue: "#60A5FA", blueDim: "#60A5FA18",
-  red: "#F87171",
+  bg: '#07090B', s1: '#0C0E11', s2: '#111316', s3: '#161A1E',
+  border: '#1C1F24', borderHi: '#2A2E35',
+  gold: '#C8922A', goldDim: '#C8922A20', goldBorder: '#C8922A35', goldLight: '#E4A83C',
+  green: '#22C55E', greenDim: '#22C55E15',
+  text: '#EDE8DF', muted: '#5C5F66', mid: '#8C8F96',
+  red: '#EF4444',
 };
 
-const QUICK = [
-  "hunting & firearms", "home woodworking", "personal finance",
-  "van life", "guitar lessons", "survival prepping",
+// ── Ticker items ─────────────────────────────────────────────────
+const TICKER = [
+  '🎯 "308 deer rifle review" outperforming 5.1× in firearms niche · 8 min ago',
+  '📈 Hunting channel in Montana gained 3.8× avg views this week',
+  '🔥 "Best turkey calls 2026" trending — 0 dominant videos under 100K subs',
+  '⚡ Outdoor gear review format surging — 4 outliers in 72 hrs',
+  '🎯 "CCW tips for beginners" outlier at 6.2× — title formula confirmed',
+  '📊 Waterfowl niche: 3 channels posting Wed afternoon seeing 2× algorithm boost',
+  '🔥 "Best budget night vision" — zero dominant video under 500K subs. Gap confirmed.',
+  '⚡ Suppressors review niche: 2.9× avg outlier this month, low competition',
 ];
 
-function useCountUp(target, active, duration = 1400) {
-  const [val, setVal] = useState(0);
+// ── Fake live count ───────────────────────────────────────────────
+function useLiveCount(base = 412) {
+  const [n, setN] = useState(base);
   useEffect(() => {
-    if (!active || !target) return;
-    let cur = 0; const step = target / (duration / 16);
     const t = setInterval(() => {
-      cur = Math.min(cur + step, target);
-      setVal(Math.floor(cur));
-      if (cur >= target) clearInterval(t);
-    }, 16);
+      if (Math.random() > 0.7) setN(v => v + 1);
+    }, 8000);
     return () => clearInterval(t);
-  }, [target, active]);
-  return val;
-}
-
-function useGauge(target, active) {
-  const [v, setV] = useState(0);
-  useEffect(() => {
-    if (!active) return;
-    setTimeout(() => setV(target), 80);
-  }, [target, active]);
-  return v;
-}
-
-function fmt(n) {
-  if (!n) return "0";
-  if (n >= 1e6) return (n / 1e6).toFixed(1) + "M";
-  if (n >= 1e3) return Math.round(n / 1e3) + "K";
+  }, []);
   return n;
 }
 
-function healthColor(score) {
-  if (score >= 75) return C.green;
-  if (score >= 50) return C.gold;
-  return C.red;
-}
-
-function trendIcon(trend) {
-  if (trend === "rising") return "↑";
-  if (trend === "declining") return "↓";
-  return "→";
-}
-
-function Gauge({ score, label, active }) {
-  const v = useGauge(score, active);
-  const r = 72, cx = 100, cy = 92;
-  const circ = Math.PI * r;
-  const prog = (v / 100) * circ;
-  const col = healthColor(score);
+// ── Reticle SVG ───────────────────────────────────────────────────
+function Reticle({ size = 340, opacity = 0.06 }) {
   return (
-    <svg viewBox="0 0 200 104" width="190" height="100" style={{ display: "block", margin: "0 auto" }}>
-      <defs>
-        <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor={col} stopOpacity="0.6" />
-          <stop offset="100%" stopColor={col} />
-        </linearGradient>
-      </defs>
-      <path d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`}
-        fill="none" stroke={C.border} strokeWidth="10" strokeLinecap="round" />
-      <path d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`}
-        fill="none" stroke="url(#gaugeGrad)" strokeWidth="10" strokeLinecap="round"
-        strokeDasharray={`${prog} ${circ}`}
-        style={{ transition: "stroke-dasharray 1.3s cubic-bezier(0.34,1.56,0.64,1)" }} />
-      <text x={cx} y={cy - 10} textAnchor="middle" fill={col}
-        style={{ fontSize: "30px", fontWeight: "800", fontFamily: "inherit", letterSpacing: "-1px" }}>
-        {v}
-      </text>
-      <text x={cx} y={cy + 10} textAnchor="middle" fill={C.mutedMid}
-        style={{ fontSize: "11px", fontWeight: "600", fontFamily: "inherit", letterSpacing: "0.08em", textTransform: "uppercase" }}>
-        {label}
-      </text>
+    <svg width={size} height={size} viewBox="0 0 200 200"
+      style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', opacity, pointerEvents: 'none', animation: 'reticle 60s linear infinite' }}>
+      <circle cx="100" cy="100" r="90" fill="none" stroke={C.gold} strokeWidth="0.5" />
+      <circle cx="100" cy="100" r="60" fill="none" stroke={C.gold} strokeWidth="0.3" />
+      <circle cx="100" cy="100" r="30" fill="none" stroke={C.gold} strokeWidth="0.5" />
+      <circle cx="100" cy="100" r="4" fill="none" stroke={C.gold} strokeWidth="0.8" />
+      <line x1="100" y1="10" x2="100" y2="70" stroke={C.gold} strokeWidth="0.5" />
+      <line x1="100" y1="130" x2="100" y2="190" stroke={C.gold} strokeWidth="0.5" />
+      <line x1="10" y1="100" x2="70" y2="100" stroke={C.gold} strokeWidth="0.5" />
+      <line x1="130" y1="100" x2="190" y2="100" stroke={C.gold} strokeWidth="0.5" />
+      <line x1="36" y1="36" x2="55" y2="55" stroke={C.gold} strokeWidth="0.3" />
+      <line x1="164" y1="36" x2="145" y2="55" stroke={C.gold} strokeWidth="0.3" />
+      <line x1="36" y1="164" x2="55" y2="145" stroke={C.gold} strokeWidth="0.3" />
+      <line x1="164" y1="164" x2="145" y2="145" stroke={C.gold} strokeWidth="0.3" />
+      {[0,45,90,135,180,225,270,315].map(a => {
+        const rad = a * Math.PI / 180;
+        const x = 100 + 90 * Math.sin(rad);
+        const y = 100 - 90 * Math.cos(rad);
+        return <circle key={a} cx={x} cy={y} r="1.5" fill={C.gold} opacity="0.6" />;
+      })}
     </svg>
   );
 }
 
-function ConfidenceBar({ value, color = C.gold, active }) {
-  const [w, setW] = useState(0);
-  useEffect(() => {
-    if (!active) return;
-    setTimeout(() => setW(value), 200);
-  }, [value, active]);
+// ── Brief preview card ────────────────────────────────────────────
+function BriefCard({ data, niche }) {
+  if (!data) return null;
   return (
-    <div style={{ height: "4px", backgroundColor: C.border, borderRadius: "2px", overflow: "hidden", marginTop: "6px" }}>
-      <div style={{ height: "100%", borderRadius: "2px", backgroundColor: color, width: `${w}%`, transition: "width 1s cubic-bezier(0.34,1.2,0.64,1)" }} />
-    </div>
-  );
-}
-
-function Tab({ label, active, onClick, count }) {
-  return (
-    <button onClick={onClick} style={{
-      padding: "8px 16px", fontSize: "13px", fontWeight: active ? "700" : "500",
-      color: active ? C.text : C.muted, backgroundColor: "transparent", border: "none",
-      borderBottom: active ? `2px solid ${C.gold}` : "2px solid transparent",
-      cursor: "pointer", fontFamily: "inherit", display: "flex", alignItems: "center", gap: "6px",
-      transition: "color 0.15s", whiteSpace: "nowrap",
-    }}>
-      {label}
-      {count != null && (
-        <span style={{ fontSize: "10px", fontWeight: "700", backgroundColor: active ? C.goldDim : C.border, color: active ? C.gold : C.muted, padding: "1px 6px", borderRadius: "10px" }}>{count}</span>
-      )}
-    </button>
-  );
-}
-
-function OutlierCard({ v, i, active }) {
-  const views = useCountUp(v.views, active, 1200 + i * 100);
-  const mult = parseFloat(v.multiplier);
-  const multColor = mult >= 5 ? C.green : mult >= 3 ? C.gold : C.blue;
-  return (
-    <div style={{
-      backgroundColor: C.surface, border: `1px solid ${C.border}`, borderRadius: "10px",
-      padding: "16px 20px", marginBottom: "8px",
-      display: "grid", gridTemplateColumns: "28px 1fr auto", gap: "14px", alignItems: "center",
-    }}>
-      <div style={{ fontSize: "13px", fontWeight: "800", color: C.muted, fontFeatureSettings: "'tnum'", textAlign: "center" }}>0{i + 1}</div>
-      <div>
-        <div style={{ fontSize: "14px", fontWeight: "600", color: C.text, lineHeight: "1.4", marginBottom: "6px" }}>{v.title}</div>
-        <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", alignItems: "center" }}>
-          <span style={{ fontSize: "12px", color: C.mutedMid }}>{v.channel}</span>
-          <span style={{ fontSize: "11px", color: C.muted }}>·</span>
-          <span style={{ fontSize: "11px", color: C.muted }}>{v.length}</span>
-          <span style={{ fontSize: "11px", color: C.muted }}>·</span>
-          <span style={{ fontSize: "11px", color: C.muted }}>{v.daysAgo}d ago</span>
-          {v.titleType && (
-            <span style={{ fontSize: "10px", fontWeight: "600", color: C.blue, backgroundColor: C.blueDim, padding: "2px 7px", borderRadius: "4px" }}>{v.titleType}</span>
-          )}
+    <div style={{ backgroundColor: C.s2, border: `1px solid ${C.goldBorder}`, borderRadius: 12, overflow: 'hidden', marginTop: 24 }}>
+      <div style={{ backgroundColor: C.s3, borderBottom: `1px solid ${C.border}`, padding: '12px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: C.green, boxShadow: `0 0 6px ${C.green}` }} />
+          <span style={{ fontSize: 11, fontWeight: 700, color: C.gold, letterSpacing: '0.1em', textTransform: 'uppercase' }}>Monday Brief — {niche}</span>
         </div>
-        {v.whyItWorked && (
-          <div style={{ fontSize: "12px", color: C.mutedMid, marginTop: "6px", fontStyle: "italic" }}>"{v.whyItWorked}"</div>
-        )}
+        <span style={{ fontSize: 10, color: C.muted, fontFamily: 'monospace' }}>{new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).toUpperCase()}</span>
       </div>
-      <div style={{ textAlign: "right" }}>
-        <div style={{ fontSize: "12px", fontWeight: "800", color: multColor, backgroundColor: `${multColor}18`, border: `1px solid ${multColor}30`, padding: "3px 9px", borderRadius: "6px", marginBottom: "4px" }}>{v.multiplier}</div>
-        <div style={{ fontSize: "15px", fontWeight: "800", color: C.text, fontFeatureSettings: "'tnum'" }}>{fmt(views)}</div>
-        <div style={{ fontSize: "10px", color: C.muted }}>views</div>
-      </div>
-    </div>
-  );
-}
-
-function TitleFormulaCard({ formula, parts }) {
-  const typeColors = { number: "#F59E0B", verb: C.green, topic: C.blue, hook: "#A78BFA", timeframe: C.gold, modifier: C.mutedMid };
-  return (
-    <div style={{ backgroundColor: C.surface, border: `1px solid ${C.border}`, borderRadius: "10px", padding: "20px 22px" }}>
-      <div style={{ fontSize: "11px", fontWeight: "600", color: C.muted, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "14px" }}>Winning Title Formula</div>
-      <div style={{ fontSize: "13px", color: C.mutedMid, marginBottom: "12px", lineHeight: "1.5" }}>{formula}</div>
-      {parts && parts.length > 0 && (
-        <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-          {parts.map((p, i) => (
-            <div key={i} style={{ textAlign: "center" }}>
-              <div style={{ fontSize: "12px", fontWeight: "700", color: typeColors[p.type] || C.mutedMid, backgroundColor: `${typeColors[p.type] || C.mutedMid}18`, padding: "6px 12px", borderRadius: "6px", marginBottom: "4px" }}>{p.text}</div>
-              <div style={{ fontSize: "10px", color: C.muted, textTransform: "uppercase", letterSpacing: "0.06em" }}>{p.type}</div>
+      <div style={{ padding: '20px 22px' }}>
+        <div style={{ marginBottom: 20 }}>
+          <div style={{ fontSize: 10, fontWeight: 700, color: C.muted, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>This Week's Outliers</div>
+          {data.outliers?.slice(0,3).map((v,i) => (
+            <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'center', padding: '8px 0', borderBottom: i < 2 ? `1px solid ${C.border}` : 'none' }}>
+              <span style={{ fontSize: 11, fontWeight: 800, color: parseFloat(v.multiplier) >= 4 ? C.green : C.gold, backgroundColor: parseFloat(v.multiplier) >= 4 ? C.greenDim : C.goldDim, padding: '2px 7px', borderRadius: 4, whiteSpace: 'nowrap' }}>{v.multiplier}</span>
+              <span style={{ fontSize: 12, color: C.text, flex: 1 }}>{v.title}</span>
+              <span style={{ fontSize: 11, color: C.muted, whiteSpace: 'nowrap' }}>{Math.round(v.views/1000)}K</span>
             </div>
           ))}
         </div>
-      )}
-    </div>
-  );
-}
-
-function ViralScoreRing({ score, active }) {
-  const v = useGauge(score, active);
-  const r = 52, circ = 2 * Math.PI * r;
-  const offset = circ - (v / 100) * circ;
-  const col = score >= 75 ? C.green : score >= 55 ? C.gold : C.blue;
-  return (
-    <div style={{ position: "relative", width: "130px", height: "130px", flexShrink: 0 }}>
-      <svg viewBox="0 0 120 120" width="130" height="130">
-        <circle cx="60" cy="60" r={r} fill="none" stroke={C.border} strokeWidth="8" />
-        <circle cx="60" cy="60" r={r} fill="none" stroke={col} strokeWidth="8"
-          strokeLinecap="round" strokeDasharray={circ} strokeDashoffset={offset}
-          transform="rotate(-90 60 60)"
-          style={{ transition: "stroke-dashoffset 1.4s cubic-bezier(0.34,1.2,0.64,1)" }} />
-      </svg>
-      <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-        <div style={{ fontSize: "28px", fontWeight: "800", color: col, lineHeight: 1 }}>{v}</div>
-        <div style={{ fontSize: "10px", color: C.muted, textTransform: "uppercase", letterSpacing: "0.08em", marginTop: "3px" }}>Viral Score</div>
-      </div>
-    </div>
-  );
-}
-
-function Loader({ step }) {
-  const steps = ["Scanning niche channels...", "Pulling last 90 days of data...", "Calculating channel averages...", "Detecting outlier videos...", "Analyzing title & thumbnail patterns...", "Generating your next video brief..."];
-  return (
-    <div style={{ textAlign: "center", padding: "70px 24px" }}>
-      <div style={{ width: "44px", height: "44px", borderRadius: "50%", margin: "0 auto 24px", border: `3px solid ${C.border}`, borderTop: `3px solid ${C.gold}`, animation: "spin 0.75s linear infinite" }} />
-      <div style={{ fontSize: "15px", fontWeight: "600", color: C.text, marginBottom: "20px" }}>Analyzing niche...</div>
-      <div style={{ display: "flex", flexDirection: "column", gap: "8px", maxWidth: "280px", margin: "0 auto" }}>
-        {steps.map((s, i) => (
-          <div key={i} style={{ fontSize: "12px", color: i < step ? C.mutedMid : i === step ? C.gold : C.border, display: "flex", alignItems: "center", gap: "8px", animation: i === step ? "pulse 1s ease infinite" : "none" }}>
-            <span style={{ fontSize: "10px" }}>{i < step ? "✓" : i === step ? "→" : "○"}</span>{s}
+        <div style={{ backgroundColor: `${C.gold}08`, border: `1px solid ${C.goldBorder}`, borderRadius: 8, padding: '16px 18px' }}>
+          <div style={{ fontSize: 10, fontWeight: 700, color: C.gold, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Your Next Video</div>
+          <div style={{ fontSize: 15, fontWeight: 700, color: C.text, lineHeight: 1.4, marginBottom: 10 }}>"{data.nextVideo?.title}"</div>
+          <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+            {[['Post', data.nextVideo?.publishDay], ['Length', data.nextVideo?.length], ['Time', data.nextVideo?.publishTime]].map(([l,v]) => (
+              <div key={l}><span style={{ fontSize: 10, color: C.muted, textTransform: 'uppercase' }}>{l} </span><span style={{ fontSize: 12, fontWeight: 700, color: C.text }}>{v}</span></div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </div>
   );
 }
 
+// ── Main page ─────────────────────────────────────────────────────
 export default function Home() {
-  const [niche, setNiche] = useState("");
+  const [demoNiche, setDemoNiche] = useState('');
   const [loading, setLoading] = useState(false);
-  const [loadStep, setLoadStep] = useState(0);
-  const [data, setData] = useState(null);
-  const [tab, setTab] = useState("overview");
-  const [email, setEmail] = useState("");
+  const [briefData, setBriefData] = useState(null);
+  const [email, setEmail] = useState('');
   const [joined, setJoined] = useState(false);
-  const [error, setError] = useState(null);
-  const [animActive, setAnimActive] = useState(false);
+  const [joinedNiche, setJoinedNiche] = useState('');
+  const [error, setError] = useState('');
+  const count = useLiveCount(412);
+  const demoRef = useRef(null);
 
-  async function analyze(nicheVal) {
-    const q = (nicheVal || niche).trim();
+  const NICHES = ['hunting & deer', 'firearms & CCW', 'outdoor survival', 'archery & bowhunting', 'waterfowl & duck'];
+
+  async function runDemo(n) {
+    const q = (n || demoNiche).trim();
     if (!q) return;
-    setNiche(q); setLoading(true); setData(null); setError(null);
-    setLoadStep(0); setAnimActive(false); setTab("overview");
-
-    const iv = setInterval(() => setLoadStep(s => s < 5 ? s + 1 : 5), 850);
-
+    setDemoNiche(q); setLoading(true); setBriefData(null); setError('');
     try {
-      const res = await fetch("/api/analyze", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ niche: q }),
-      });
-      clearInterval(iv); setLoadStep(5);
-      if (!res.ok) throw new Error("API error");
-      const parsed = await res.json();
-      setTimeout(() => { setData(parsed); setLoading(false); setTimeout(() => setAnimActive(true), 100); }, 500);
+      const res = await fetch('/api/analyze', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ niche: q }) });
+      if (!res.ok) throw new Error();
+      const data = await res.json();
+      setBriefData(data);
     } catch {
-      clearInterval(iv);
-      setError("Analysis failed — try a different niche.");
-      setLoading(false);
-    }
+      setError('Could not generate brief. Try again.');
+    } finally { setLoading(false); }
+  }
+
+  async function joinWaitlist() {
+    if (!email.includes('@')) return;
+    try {
+      await fetch('/api/waitlist', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, niche: demoNiche || 'general' }) });
+    } catch {}
+    setJoined(true); setJoinedNiche(demoNiche || 'outdoor creators');
   }
 
   const S = {
-    app: { minHeight: "100vh", backgroundColor: C.bg, color: C.text, fontFamily: "'Inter','SF Pro Display',system-ui,sans-serif" },
-    nav: { borderBottom: `1px solid ${C.border}`, padding: "16px 32px", display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, backgroundColor: C.bg, zIndex: 20 },
-    logo: { fontSize: "16px", fontWeight: "800", letterSpacing: "-0.3px", display: "flex", alignItems: "center", gap: "7px" },
-    dot: { width: "7px", height: "7px", borderRadius: "50%", backgroundColor: C.gold },
-    badge: { fontSize: "10px", fontWeight: "700", letterSpacing: "0.1em", textTransform: "uppercase", color: C.gold, border: `1px solid ${C.goldBorder}`, padding: "4px 10px", borderRadius: "4px", backgroundColor: C.goldDim },
-    hero: { maxWidth: "700px", margin: "0 auto", padding: "72px 24px 40px", textAlign: "center" },
-    h1: { fontSize: "clamp(32px,5.5vw,52px)", fontWeight: "900", letterSpacing: "-1.5px", lineHeight: 1.05, marginBottom: "18px" },
-    sub: { fontSize: "16px", color: C.muted, lineHeight: 1.65, maxWidth: "480px", margin: "0 auto 32px" },
-    inputRow: { display: "flex", gap: "8px", maxWidth: "560px", margin: "0 auto 16px", flexWrap: "wrap", justifyContent: "center" },
-    input: { flex: 1, minWidth: "210px", padding: "13px 16px", fontSize: "14px", backgroundColor: C.surface, border: `1px solid ${C.border}`, borderRadius: "8px", color: C.text, outline: "none", fontFamily: "inherit" },
-    btn: { padding: "13px 22px", fontSize: "13px", fontWeight: "700", backgroundColor: C.gold, color: "#000", border: "none", borderRadius: "8px", cursor: "pointer", fontFamily: "inherit", letterSpacing: "0.02em", whiteSpace: "nowrap" },
-    quickRow: { display: "flex", gap: "8px", flexWrap: "wrap", justifyContent: "center", maxWidth: "560px", margin: "0 auto" },
-    results: { maxWidth: "880px", margin: "0 auto", padding: "0 20px 80px" },
-    topBar: { backgroundColor: C.surface2, border: `1px solid ${C.border}`, borderRadius: "12px", padding: "20px 24px", marginBottom: "2px", display: "flex", flexWrap: "wrap", gap: "20px", alignItems: "center" },
-    tabBar: { display: "flex", gap: "0", borderBottom: `1px solid ${C.border}`, marginBottom: "24px", marginTop: "28px", overflowX: "auto" },
-    grid2: { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: "12px" },
-    card: { backgroundColor: C.surface, border: `1px solid ${C.border}`, borderRadius: "10px", padding: "20px" },
-    sectionLabel: { fontSize: "11px", fontWeight: "700", letterSpacing: "0.1em", textTransform: "uppercase", color: C.muted, marginBottom: "14px", marginTop: "28px" },
-    patternRow: { backgroundColor: C.surface, border: `1px solid ${C.border}`, borderRadius: "10px", padding: "16px 20px", marginBottom: "8px" },
-    nextCard: { backgroundColor: C.surface2, border: `1px solid ${C.goldBorder}`, borderRadius: "12px", padding: "28px 28px", marginBottom: "12px" },
-    hookCard: { backgroundColor: C.surface, border: `1px solid ${C.border}`, borderRadius: "8px", padding: "13px 16px", marginBottom: "8px", fontSize: "13px", color: C.mutedMid, fontStyle: "italic" },
-    cta: { borderTop: `1px solid ${C.border}`, padding: "56px 24px 40px", textAlign: "center", maxWidth: "520px", margin: "20px auto 0" },
+    wrap: { minHeight: '100vh', backgroundColor: C.bg, color: C.text },
+    ticker: { backgroundColor: '#0A0C0F', borderBottom: `1px solid ${C.border}`, padding: '8px 0', overflow: 'hidden', position: 'relative' },
+    tickInner: { display: 'flex', gap: 48, whiteSpace: 'nowrap', animation: 'ticker 40s linear infinite', fontSize: 11, color: C.mid },
+    nav: { borderBottom: `1px solid ${C.border}`, padding: '16px 40px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, backgroundColor: `${C.bg}F0`, backdropFilter: 'blur(12px)', zIndex: 30 },
+    logo: { display: 'flex', alignItems: 'center', gap: 10, fontSize: 15, fontWeight: 800, letterSpacing: '-0.3px' },
+    dot: { width: 8, height: 8, borderRadius: '50%', backgroundColor: C.gold, boxShadow: `0 0 8px ${C.gold}` },
+    navLinks: { display: 'flex', gap: 28, fontSize: 13, color: C.muted },
+    navCTA: { fontSize: 12, fontWeight: 700, color: '#000', backgroundColor: C.gold, padding: '8px 18px', borderRadius: 6, border: 'none', cursor: 'pointer', letterSpacing: '0.02em', fontFamily: 'inherit' },
+    hero: { position: 'relative', maxWidth: 860, margin: '0 auto', padding: '100px 24px 80px', textAlign: 'center', overflow: 'hidden' },
+    eyebrow: { display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: C.gold, backgroundColor: C.goldDim, border: `1px solid ${C.goldBorder}`, padding: '5px 12px', borderRadius: 4, marginBottom: 28 },
+    h1: { fontSize: 'clamp(38px,6vw,64px)', fontWeight: 900, letterSpacing: '-2px', lineHeight: 1.02, marginBottom: 22, color: C.text },
+    sub: { fontSize: 17, color: C.muted, lineHeight: 1.7, maxWidth: 560, margin: '0 auto 40px' },
+    heroCtaRow: { display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 56 },
+    btnPrimary: { fontSize: 14, fontWeight: 700, color: '#000', backgroundColor: C.gold, padding: '13px 26px', borderRadius: 8, border: 'none', cursor: 'pointer', fontFamily: 'inherit', letterSpacing: '0.02em' },
+    btnGhost: { fontSize: 14, fontWeight: 600, color: C.mid, backgroundColor: 'transparent', padding: '13px 26px', borderRadius: 8, border: `1px solid ${C.border}`, cursor: 'pointer', fontFamily: 'inherit' },
+    statsRow: { display: 'flex', justifyContent: 'center', gap: 0, borderTop: `1px solid ${C.border}`, borderBottom: `1px solid ${C.border}`, padding: '28px 0', marginTop: 8 },
+    statItem: { textAlign: 'center', padding: '0 36px', borderRight: `1px solid ${C.border}` },
+    statNum: { fontSize: 28, fontWeight: 900, color: C.gold, letterSpacing: '-1px', display: 'block' },
+    statLabel: { fontSize: 11, color: C.muted, textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 3 },
+    section: { maxWidth: 960, margin: '0 auto', padding: '80px 24px' },
+    sectionLabel: { fontSize: 10, fontWeight: 700, color: C.gold, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 14 },
+    h2: { fontSize: 'clamp(28px,4vw,42px)', fontWeight: 900, letterSpacing: '-1px', lineHeight: 1.1, marginBottom: 16 },
+    divider: { borderTop: `1px solid ${C.border}` },
+    demoBox: { backgroundColor: C.s1, border: `1px solid ${C.border}`, borderRadius: 14, padding: '36px 36px 32px', maxWidth: 680, margin: '0 auto' },
+    demoInput: { flex: 1, minWidth: 200, padding: '13px 16px', fontSize: 14, backgroundColor: C.s2, border: `1px solid ${C.border}`, borderRadius: 8, color: C.text, fontFamily: 'inherit', outline: 'none' },
+    demoBtn: { padding: '13px 20px', fontSize: 13, fontWeight: 700, backgroundColor: C.gold, color: '#000', border: 'none', borderRadius: 8, cursor: 'pointer', fontFamily: 'inherit', whiteSpace: 'nowrap' },
+    quickChip: { fontSize: 11, fontWeight: 600, color: C.muted, backgroundColor: C.s2, border: `1px solid ${C.border}`, padding: '5px 11px', borderRadius: 20, cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.15s' },
+    problemGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px,1fr))', gap: 16 },
+    problemCard: { backgroundColor: C.s1, border: `1px solid ${C.border}`, borderRadius: 10, padding: '22px 22px' },
+    suiteGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px,1fr))', gap: 14 },
+    suiteCard: { backgroundColor: C.s1, border: `1px solid ${C.border}`, borderRadius: 10, padding: '24px 22px', position: 'relative', overflow: 'hidden' },
+    suiteCardFeat: { backgroundColor: C.s2, border: `1px solid ${C.goldBorder}`, borderRadius: 10, padding: '24px 22px', position: 'relative', overflow: 'hidden' },
+    price: { fontSize: 28, fontWeight: 900, color: C.text, letterSpacing: '-1px' },
+    priceSub: { fontSize: 12, color: C.muted, marginLeft: 4 },
+    ctaSection: { backgroundColor: C.s1, borderTop: `1px solid ${C.border}`, borderBottom: `1px solid ${C.border}`, padding: '80px 24px' },
+    ctaInner: { maxWidth: 640, margin: '0 auto', textAlign: 'center' },
+    emailRow: { display: 'flex', gap: 10, maxWidth: 440, margin: '0 auto', flexWrap: 'wrap', justifyContent: 'center' },
+    emailInput: { flex: 1, minWidth: 200, padding: '13px 16px', fontSize: 14, backgroundColor: C.s2, border: `1px solid ${C.border}`, borderRadius: 8, color: C.text, fontFamily: 'inherit', outline: 'none' },
+    footer: { padding: '32px 40px', borderTop: `1px solid ${C.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 },
   };
 
   return (
     <>
       <Head>
-        <title>NicheRadar — YouTube Outlier Intelligence</title>
-        <meta name="description" content="See which videos are outperforming their channel average in your niche right now. Get your next video brief backed by real data." />
-        <meta property="og:title" content="NicheRadar — YouTube Outlier Intelligence" />
-        <meta property="og:description" content="Stop guessing what to make next. See what's actually winning in your niche." />
+        <title>DownRange Creator — YouTube Intelligence for Outdoor & Firearms Creators</title>
+        <meta name="description" content="Weekly channel briefs, outlier detection, and sponsor deal tools built specifically for firearms, hunting, and outdoor YouTube creators." />
+        <meta property="og:title" content="DownRange Creator — YouTube Intel for Outdoor Creators" />
+        <meta property="og:description" content="Stop using generic tools. Get YouTube intelligence built for your niche." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23E8A020'/></svg>" />
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='none' stroke='%23C8922A' stroke-width='8'/><line x1='50' y1='10' x2='50' y2='40' stroke='%23C8922A' stroke-width='4'/><line x1='50' y1='60' x2='50' y2='90' stroke='%23C8922A' stroke-width='4'/><line x1='10' y1='50' x2='40' y2='50' stroke='%23C8922A' stroke-width='4'/><line x1='60' y1='50' x2='90' y2='50' stroke='%23C8922A' stroke-width='4'/></svg>" />
       </Head>
 
-      <div style={S.app}>
-        <nav style={S.nav}>
-          <div style={S.logo}><div style={S.dot} /> NicheRadar</div>
-          <span style={S.badge}>Early Access</span>
-        </nav>
+      <div style={S.wrap}>
 
-        <div style={S.hero}>
-          <div style={{ fontSize: "11px", fontWeight: "700", letterSpacing: "0.12em", textTransform: "uppercase", color: C.gold, marginBottom: "18px" }}>YouTube Outlier Intelligence</div>
-          <h1 style={S.h1}>Stop guessing.<br /><span style={{ color: C.gold }}>See what&apos;s winning</span> right now.</h1>
-          <p style={S.sub}>NicheRadar scans 10+ channels in your niche, finds videos outperforming their average by 2–8×, and generates your next video brief — backed by real data.</p>
-
-          <div style={S.inputRow}>
-            <input style={S.input} value={niche} onChange={e => setNiche(e.target.value)}
-              onKeyDown={e => e.key === "Enter" && !loading && analyze()}
-              placeholder="Enter a niche (e.g. 'survival prepping')" />
-            <button style={{ ...S.btn, opacity: loading || !niche.trim() ? 0.5 : 1 }}
-              onClick={() => analyze()} disabled={loading || !niche.trim()}>
-              {loading ? "Analyzing…" : "Analyze →"}
-            </button>
-          </div>
-
-          <div style={S.quickRow}>
-            {QUICK.map(q => (
-              <button key={q} style={{ fontSize: "12px", color: C.muted, backgroundColor: C.surface, border: `1px solid ${C.border}`, padding: "6px 12px", borderRadius: "20px", cursor: "pointer", fontFamily: "inherit" }}
-                onMouseEnter={e => { e.target.style.borderColor = C.gold; e.target.style.color = C.gold; }}
-                onMouseLeave={e => { e.target.style.borderColor = C.border; e.target.style.color = C.muted; }}
-                onClick={() => analyze(q)}>{q}</button>
+        {/* ── Live Intel Ticker ── */}
+        <div style={S.ticker}>
+          <div style={S.tickInner}>
+            {[...TICKER, ...TICKER].map((t, i) => (
+              <span key={i} style={{ flexShrink: 0 }}>{t}</span>
             ))}
           </div>
         </div>
 
-        {loading && <Loader step={loadStep} />}
-        {error && <div style={{ textAlign: "center", color: C.red, padding: "20px", fontSize: "14px" }}>{error}</div>}
+        {/* ── Nav ── */}
+        <nav style={S.nav}>
+          <div style={S.logo}>
+            <div style={S.dot} />
+            DownRange<span style={{ color: C.gold }}>Creator</span>
+          </div>
+          <div style={S.navLinks}>
+            <a href="#intel" style={{ color: C.muted, textDecoration: 'none' }}>Intel</a>
+            <a href="#suite" style={{ color: C.muted, textDecoration: 'none' }}>Suite</a>
+            <a href="#pricing" style={{ color: C.muted, textDecoration: 'none' }}>Pricing</a>
+          </div>
+          <button style={S.navCTA} onClick={() => document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' })}>
+            Join Waitlist
+          </button>
+        </nav>
 
-        {data && (
-          <div style={S.results} className="fu">
-            <div style={S.topBar}>
-              <div>
-                <div style={{ fontSize: "18px", fontWeight: "800", letterSpacing: "-0.5px" }}>{data.niche}</div>
-                <div style={{ fontSize: "12px", color: C.muted, marginTop: "2px" }}>{data.channelsScanned} channels · {data.videosAnalyzed} videos · last 90 days</div>
-              </div>
-              <div style={{ marginLeft: "auto", display: "flex", gap: "24px", flexWrap: "wrap" }}>
-                {[[fmt(data.avgChannelViews), "Avg video views"], [data.outliers?.length, "Outliers found"], [`${data.nicheHealth?.score}/100`, "Niche health"]].map(([v, l]) => (
-                  <div key={l} style={{ textAlign: "right" }}>
-                    <div style={{ fontSize: "18px", fontWeight: "800", color: C.gold }}>{v}</div>
-                    <div style={{ fontSize: "11px", color: C.muted, textTransform: "uppercase", letterSpacing: "0.05em" }}>{l}</div>
-                  </div>
-                ))}
-              </div>
+        {/* ── Hero ── */}
+        <div style={S.hero}>
+          <Reticle size={480} opacity={0.05} />
+          <div className="fu" style={{ position: 'relative', zIndex: 1 }}>
+            <div style={S.eyebrow}>
+              <div style={{ width: 5, height: 5, borderRadius: '50%', backgroundColor: C.green, animation: 'pulse 2s ease infinite' }} />
+              Early Access Open · {count} creators on waitlist
             </div>
-
-            <div style={S.tabBar}>
-              {[["overview", "Overview"], ["outliers", "Outliers", data.outliers?.length], ["patterns", "Patterns"], ["brief", "Your Brief"]].map(([id, label, count]) => (
-                <Tab key={id} label={label} count={count} active={tab === id} onClick={() => setTab(id)} />
+            <h1 style={S.h1}>
+              YouTube intel for the<br />
+              <span style={{ color: C.gold }}>niche nobody built for.</span>
+            </h1>
+            <p style={S.sub}>
+              Every creator tool is built for faceless channels and gaming bros. DownRange Creator is built for <strong style={{ color: C.text, fontWeight: 700 }}>firearms instructors, hunters, outdoor guides, and 2A advocates</strong> — the creators these tools forgot.
+            </p>
+            <div style={S.heroCtaRow}>
+              <button style={S.btnPrimary} onClick={() => demoRef.current?.scrollIntoView({ behavior: 'smooth' })}>
+                See Your Monday Brief →
+              </button>
+              <button style={S.btnGhost} onClick={() => document.getElementById('suite')?.scrollIntoView({ behavior: 'smooth' })}>
+                View the Suite
+              </button>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: 0, borderTop: `1px solid ${C.border}`, borderBottom: `1px solid ${C.border}`, padding: '24px 0' }}>
+              {[['4 products', 'in one suite'], ['Real data', 'not AI guesses'], ['Your niche', 'not generic tools'], ['Every Monday', 'in your inbox']].map(([n, l], i, arr) => (
+                <div key={n} style={{ ...S.statItem, borderRight: i < arr.length - 1 ? `1px solid ${C.border}` : 'none' }}>
+                  <span style={{ ...S.statNum, fontSize: 18 }}>{n}</span>
+                  <span style={S.statLabel}>{l}</span>
+                </div>
               ))}
             </div>
+          </div>
+        </div>
 
-            {tab === "overview" && (
-              <div className="fu">
-                <div style={S.grid2}>
-                  <div style={S.card}>
-                    <div style={{ fontSize: "11px", fontWeight: "700", color: C.muted, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "4px" }}>Niche Health</div>
-                    <Gauge score={data.nicheHealth?.score} label={data.nicheHealth?.label} active={animActive} />
-                    <div style={{ display: "flex", justifyContent: "center", gap: "6px", alignItems: "center", marginTop: "8px" }}>
-                      <span style={{ fontSize: "13px", color: healthColor(data.nicheHealth?.score), fontWeight: "700" }}>{trendIcon(data.nicheHealth?.trend)} {data.nicheHealth?.trend}</span>
-                    </div>
-                    <div style={{ fontSize: "12px", color: C.muted, textAlign: "center", marginTop: "8px", lineHeight: 1.5 }}>{data.nicheHealth?.insight}</div>
-                  </div>
-                  <div style={S.card}>
-                    <div style={{ fontSize: "11px", fontWeight: "700", color: C.muted, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "14px" }}>Top Channels</div>
-                    {data.topChannels?.map((ch, i) => (
-                      <div key={i} style={{ marginBottom: "14px" }}>
-                        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "5px" }}>
-                          <span style={{ fontSize: "13px", fontWeight: "600", color: C.text }}>{ch.name}</span>
-                          <span style={{ fontSize: "11px", color: C.muted }}>{ch.subscribers}</span>
-                        </div>
-                        <ConfidenceBar value={ch.dominance} color={i === 0 ? C.gold : C.blue} active={animActive} />
-                        <div style={{ fontSize: "11px", color: C.muted, marginTop: "3px" }}>{fmt(ch.avgViews)} avg views · {ch.dominance}% dominance</div>
-                      </div>
-                    ))}
-                  </div>
+        {/* ── Problem ── */}
+        <div style={S.divider} />
+        <div style={{ ...S.section }} id="intel">
+          <div style={{ textAlign: 'center', marginBottom: 48 }}>
+            <div style={S.sectionLabel}>The Problem</div>
+            <h2 style={S.h2}>Generic tools built for generic creators.</h2>
+            <p style={{ fontSize: 16, color: C.muted, maxWidth: 520, margin: '0 auto', lineHeight: 1.7 }}>
+              TubeLab, VidIQ, OutlierKit — great tools if you're making finance content or gaming videos. Not so great when your niche involves NFA items, FFL compliance, and knowing the difference between a fawn and a doe.
+            </p>
+          </div>
+          <div style={S.problemGrid}>
+            {[
+              ['🎯', 'No niche knowledge', "They don't know that 'suppressors' and 'silencers' are the same search. They don't know deer season affects your publishing schedule. You do."],
+              ['📊', 'Built for faceless channels', "Every testimonial is about finding a '$500/day' automation niche. You're not automating. You're hunting, shooting, and living this content."],
+              ['🔐', 'Platform risk blind spots', "Generic tools have no idea that firearms content gets demonetized differently, shadow-restricted, or flagged by YouTube's automated systems. We do."],
+              ['📬', 'You have to go find the intel', "Every tool requires you to log in, browse, filter, and figure it out yourself. We send it to you. Every Monday. Done."],
+            ].map(([icon, title, desc]) => (
+              <div key={title} style={S.problemCard}>
+                <div style={{ fontSize: 24, marginBottom: 12 }}>{icon}</div>
+                <div style={{ fontSize: 14, fontWeight: 700, color: C.text, marginBottom: 8 }}>{title}</div>
+                <div style={{ fontSize: 13, color: C.muted, lineHeight: 1.6 }}>{desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── Demo ── */}
+        <div style={{ backgroundColor: C.s1, borderTop: `1px solid ${C.border}`, borderBottom: `1px solid ${C.border}`, padding: '80px 24px' }} ref={demoRef}>
+          <div style={{ maxWidth: 680, margin: '0 auto', textAlign: 'center' }}>
+            <div style={S.sectionLabel}>Live Preview</div>
+            <h2 style={{ ...S.h2, fontSize: 'clamp(24px,3.5vw,36px)', marginBottom: 12 }}>This is what lands in your inbox every Monday.</h2>
+            <p style={{ fontSize: 15, color: C.muted, marginBottom: 32, lineHeight: 1.65 }}>
+              Enter your niche and see a real Monday Brief — the same format delivered to your inbox every week.
+            </p>
+            <div style={S.demoBox}>
+              <div style={{ display: 'flex', gap: 10, marginBottom: 16, flexWrap: 'wrap' }}>
+                <input style={S.demoInput} placeholder="e.g. 'deer hunting' or 'CCW training'" value={demoNiche}
+                  onChange={e => setDemoNiche(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && !loading && runDemo()} />
+                <button style={{ ...S.demoBtn, opacity: loading || !demoNiche.trim() ? 0.5 : 1 }}
+                  onClick={() => runDemo()} disabled={loading || !demoNiche.trim()}>
+                  {loading ? '...' : 'Generate Brief →'}
+                </button>
+              </div>
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: briefData || loading ? 4 : 0 }}>
+                {NICHES.map(n => (
+                  <button key={n} style={S.quickChip}
+                    onMouseEnter={e => { e.target.style.borderColor = C.gold; e.target.style.color = C.gold; }}
+                    onMouseLeave={e => { e.target.style.borderColor = C.border; e.target.style.color = C.muted; }}
+                    onClick={() => runDemo(n)}>{n}</button>
+                ))}
+              </div>
+              {loading && (
+                <div style={{ textAlign: 'center', padding: '32px 0', color: C.muted, fontSize: 13 }}>
+                  <div style={{ width: 28, height: 28, borderRadius: '50%', border: `2px solid ${C.border}`, borderTop: `2px solid ${C.gold}`, animation: 'spin 0.7s linear infinite', margin: '0 auto 12px' }} />
+                  Scanning niche intel...
                 </div>
-                <div style={S.sectionLabel}>Trending Topics in This Niche</div>
-                <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-                  {data.trendingTopics?.map((t, i) => (
-                    <div key={i} style={{ fontSize: "13px", fontWeight: "600", color: i === 0 ? C.gold : C.mutedMid, backgroundColor: i === 0 ? C.goldDim : C.surface, border: `1px solid ${i === 0 ? C.goldBorder : C.border}`, padding: "8px 14px", borderRadius: "20px" }}>
-                      {i === 0 && "🔥 "}{t}
+              )}
+              {error && <div style={{ color: C.red, fontSize: 13, marginTop: 12 }}>{error}</div>}
+              {briefData && <BriefCard data={briefData} niche={demoNiche} />}
+            </div>
+          </div>
+        </div>
+
+        {/* ── Suite ── */}
+        <div style={S.section} id="suite">
+          <div style={{ textAlign: 'center', marginBottom: 48 }}>
+            <div style={S.sectionLabel}>The Suite</div>
+            <h2 style={S.h2}>Four tools. One niche. Your unfair advantage.</h2>
+            <p style={{ fontSize: 16, color: C.muted, maxWidth: 480, margin: '0 auto', lineHeight: 1.7 }}>
+              Most creators need 5 different subscriptions to get what DownRange Creator delivers in one place — built for your world.
+            </p>
+          </div>
+          <div style={S.suiteGrid} id="pricing">
+            {[
+              { icon: '📡', name: 'Monday Brief', tag: 'MOST POPULAR', price: '$29', sub: '/mo', desc: 'Weekly outlier scan + next video brief delivered to your inbox every Monday. No dashboard. No login. Just the intel you need.', features: ['5 weekly outlier videos', 'Pattern analysis', 'Your next video brief', 'Title + hook options', 'Best publish timing'], featured: true },
+              { icon: '🔭', name: 'Niche Intel', tag: '', price: '$49', sub: '/mo', desc: 'Full outlier detection dashboard for your specific niche. Real-time data, competitor tracking, and content gap analysis.', features: ['Unlimited niche scans', 'Competitor tracking', 'Content gap detection', 'Title formula library', 'Weekly trend reports'], featured: false },
+              { icon: '🤝', name: 'Sponsor Deals', tag: '', price: '$39', sub: '/mo', desc: 'Know your real market rate. Generate pro media kits. Track brand outreach. Built for creators in regulated niches.', features: ['Auto rate calculator', 'Media kit generator', 'Brand pitch templates', 'Outreach CRM', 'Deal tracking'], featured: false },
+              { icon: '🏷️', name: 'Brand Directory', tag: 'FOR BRANDS', price: '$199', sub: '/mo', desc: 'For outdoor & firearms brands: find, vet, and contact verified YouTube creators in your niche. Direct access.', features: ['400+ outdoor creators', 'Engagement analytics', 'Direct contact info', 'Niche filtering', 'Monthly new additions'], featured: false },
+            ].map(({ icon, name, tag, price, sub, desc, features, featured }) => (
+              <div key={name} style={featured ? S.suiteCardFeat : S.suiteCard}>
+                {featured && (
+                  <div style={{ position: 'absolute', top: 0, right: 0, backgroundColor: C.gold, color: '#000', fontSize: 9, fontWeight: 800, letterSpacing: '0.1em', padding: '4px 10px', borderBottomLeftRadius: 8 }}>
+                    {tag}
+                  </div>
+                )}
+                <div style={{ fontSize: 28, marginBottom: 14 }}>{icon}</div>
+                <div style={{ fontSize: 16, fontWeight: 800, color: C.text, marginBottom: 6 }}>{name}</div>
+                <div style={{ marginBottom: 14 }}>
+                  <span style={S.price}>{price}</span>
+                  <span style={S.priceSub}>{sub}</span>
+                </div>
+                <div style={{ fontSize: 12, color: C.muted, lineHeight: 1.6, marginBottom: 16 }}>{desc}</div>
+                <div style={{ borderTop: `1px solid ${C.border}`, paddingTop: 14 }}>
+                  {features.map(f => (
+                    <div key={f} style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 7 }}>
+                      <span style={{ color: C.gold, fontSize: 11 }}>✓</span>
+                      <span style={{ fontSize: 12, color: C.mid }}>{f}</span>
                     </div>
                   ))}
                 </div>
               </div>
-            )}
+            ))}
+          </div>
+          <div style={{ textAlign: 'center', marginTop: 24 }}>
+            <p style={{ fontSize: 13, color: C.muted }}>All four products available during early access. Founding member pricing locked for life.</p>
+          </div>
+        </div>
 
-            {tab === "outliers" && (
-              <div className="fu">
-                <div style={{ fontSize: "13px", color: C.muted, marginBottom: "16px" }}>Videos outperforming their channel&apos;s 90-day average by 2× or more. These are what the algorithm is actively pushing right now.</div>
-                {data.outliers?.map((v, i) => <OutlierCard key={i} v={v} i={i} active={animActive} />)}
-              </div>
-            )}
-
-            {tab === "patterns" && (
-              <div className="fu">
-                {data.patterns?.titleFormula && (
-                  <>
-                    <div style={S.sectionLabel}>Title Formula</div>
-                    <TitleFormulaCard formula={data.patterns.titleFormula.formula} parts={data.patterns.titleFormula.parts} />
-                  </>
-                )}
-                <div style={S.sectionLabel}>Optimization Signals</div>
-                {[["⏱ Ideal Length", data.patterns?.bestLength?.value, data.patterns?.bestLength?.confidence], ["📅 Best Day", data.patterns?.bestDay?.value, data.patterns?.bestDay?.confidence], ["🕑 Best Time", data.patterns?.bestTime?.value, data.patterns?.bestTime?.confidence], ["🖼 Thumbnail Pattern", data.patterns?.thumbnailPattern?.value, data.patterns?.thumbnailPattern?.confidence]].map(([label, value, conf]) => (
-                  <div key={label} style={S.patternRow}>
-                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px" }}>
-                      <span style={{ fontSize: "13px", fontWeight: "600", color: C.text }}>{label}</span>
-                      <span style={{ fontSize: "11px", color: C.muted }}>Confidence: {conf}%</span>
-                    </div>
-                    <div style={{ fontSize: "13px", color: C.mutedMid, marginBottom: "8px" }}>{value}</div>
-                    <ConfidenceBar value={conf} active={animActive} />
-                  </div>
-                ))}
-                {data.patterns?.topTitleTypes && (
-                  <>
-                    <div style={S.sectionLabel}>Title Type Breakdown</div>
-                    <div style={S.grid2}>
-                      {data.patterns.topTitleTypes.map((t, i) => (
-                        <div key={i} style={S.patternRow}>
-                          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px" }}>
-                            <span style={{ fontSize: "13px", fontWeight: "600", color: C.text }}>{t.type}</span>
-                            <span style={{ fontSize: "13px", fontWeight: "800", color: C.gold }}>{t.percentage}%</span>
-                          </div>
-                          <ConfidenceBar value={t.percentage} color={i === 0 ? C.gold : C.blue} active={animActive} />
-                        </div>
-                      ))}
-                    </div>
-                  </>
-                )}
-              </div>
-            )}
-
-            {tab === "brief" && data.nextVideo && (
-              <div className="fu">
-                <div style={S.nextCard}>
-                  <div style={{ display: "flex", gap: "24px", alignItems: "flex-start", flexWrap: "wrap" }}>
-                    <ViralScoreRing score={data.nextVideo.viralScore} active={animActive} />
-                    <div style={{ flex: 1, minWidth: "200px" }}>
-                      <div style={{ fontSize: "11px", fontWeight: "700", color: C.gold, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "10px" }}>AI Recommendation</div>
-                      <div style={{ fontSize: "clamp(16px,2.5vw,22px)", fontWeight: "800", color: C.text, letterSpacing: "-0.5px", lineHeight: 1.3, marginBottom: "12px" }}>"{data.nextVideo.title}"</div>
-                      <div style={{ fontSize: "13px", color: C.mutedMid, lineHeight: 1.6, marginBottom: "16px" }}>{data.nextVideo.angle}</div>
-                      <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
-                        {[["Length", data.nextVideo.length], ["Publish", data.nextVideo.publishDay], ["Time", data.nextVideo.publishTime]].map(([l, v]) => (
-                          <div key={l}>
-                            <div style={{ fontSize: "10px", color: C.muted, textTransform: "uppercase", letterSpacing: "0.06em" }}>{l}</div>
-                            <div style={{ fontSize: "13px", fontWeight: "700", color: C.text }}>{v}</div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                  <div style={{ marginTop: "20px" }}>
-                    {data.nextVideo.reasons?.map((r, i) => (
-                      <div key={i} style={{ display: "flex", gap: "10px", marginBottom: "8px", alignItems: "flex-start" }}>
-                        <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: C.gold, flexShrink: 0, marginTop: "7px" }} />
-                        <span style={{ fontSize: "13px", color: C.mutedMid, lineHeight: 1.5 }}>{r}</span>
-                      </div>
-                    ))}
-                  </div>
+        {/* ── Who it's for ── */}
+        <div style={{ backgroundColor: C.s1, borderTop: `1px solid ${C.border}`, borderBottom: `1px solid ${C.border}`, padding: '72px 24px' }}>
+          <div style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center' }}>
+            <div style={S.sectionLabel}>Who It's For</div>
+            <h2 style={{ ...S.h2, marginBottom: 40 }}>Built for creators who know this world.</h2>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center' }}>
+              {['Firearms instructors', 'Hunting channels', 'Outdoor adventure', '2A advocates', 'Gear reviewers', 'CCW instructors', 'Bowhunters', 'Waterfowl hunters', 'Long-range shooting', 'Survival & prepping', 'Turkey hunting', 'Deer hunting', 'FFL dealers', 'Competitive shooters', 'Knife & EDC', 'Fishing & fly fishing'].map(t => (
+                <div key={t} style={{ fontSize: 13, fontWeight: 600, color: C.mid, backgroundColor: C.s2, border: `1px solid ${C.border}`, padding: '8px 16px', borderRadius: 6 }}>
+                  {t}
                 </div>
-                {data.nextVideo.hooks && (
-                  <>
-                    <div style={S.sectionLabel}>3 Opening Hook Options</div>
-                    {data.nextVideo.hooks.map((h, i) => (
-                      <div key={i} style={S.hookCard}>
-                        <span style={{ fontSize: "11px", fontWeight: "700", color: C.gold, marginRight: "8px" }}>HOOK {i + 1}</span>
-                        &ldquo;{h}&rdquo;
-                      </div>
-                    ))}
-                  </>
-                )}
-              </div>
-            )}
-
-            <div style={S.cta}>
-              <div style={{ fontSize: "24px", fontWeight: "800", letterSpacing: "-0.8px", marginBottom: "10px" }}>Get weekly reports for your niche</div>
-              <div style={{ fontSize: "14px", color: C.muted, marginBottom: "24px", lineHeight: 1.65 }}>Every Monday, NicheRadar sends you a fresh outlier scan + your next video brief. Free during early access.</div>
-              {!joined ? (
-                <>
-                  <div style={{ display: "flex", gap: "8px", maxWidth: "380px", margin: "0 auto", flexWrap: "wrap", justifyContent: "center" }}>
-                    <input style={{ ...S.input, flex: 1, minWidth: "180px" }} type="email" placeholder="your@email.com" value={email} onChange={e => setEmail(e.target.value)} />
-                    <button style={S.btn} onClick={() => email.includes("@") && setJoined(true)}>Get Early Access</button>
-                  </div>
-                  <div style={{ fontSize: "11px", color: C.muted, marginTop: "12px" }}>No spam. No credit card. Cancel anytime.</div>
-                </>
-              ) : (
-                <div style={{ fontSize: "15px", fontWeight: "700", color: C.green }}>✓ You&apos;re on the list — we&apos;ll reach out within 48 hours.</div>
-              )}
+              ))}
             </div>
           </div>
-        )}
+        </div>
+
+        {/* ── Waitlist CTA ── */}
+        <div style={S.ctaSection} id="waitlist">
+          <div style={S.ctaInner}>
+            <div style={{ ...S.eyebrow, display: 'inline-flex', margin: '0 auto 24px' }}>
+              <div style={{ width: 5, height: 5, borderRadius: '50%', backgroundColor: C.green, animation: 'pulse 2s ease infinite' }} />
+              {count} creators already on the list
+            </div>
+            <h2 style={{ ...S.h2, fontSize: 'clamp(28px,4vw,44px)', marginBottom: 14 }}>
+              Get founding member access.
+            </h2>
+            <p style={{ fontSize: 16, color: C.muted, marginBottom: 32, lineHeight: 1.65, maxWidth: 460, margin: '0 auto 32px' }}>
+              Early access members lock in the lowest pricing — forever. We launch Monday Brief first, followed by the full suite.
+            </p>
+            {!joined ? (
+              <>
+                <div style={S.emailRow}>
+                  <input style={S.emailInput} type="email" placeholder="your@email.com" value={email} onChange={e => setEmail(e.target.value)}
+                    onKeyDown={e => e.key === 'Enter' && joinWaitlist()} />
+                  <button style={{ ...S.navCTA, padding: '13px 22px', fontSize: 14 }} onClick={joinWaitlist}>
+                    Join Waitlist →
+                  </button>
+                </div>
+                <p style={{ fontSize: 11, color: C.muted, marginTop: 14 }}>No spam. No credit card. Founding price locked when you join.</p>
+              </>
+            ) : (
+              <div style={{ backgroundColor: C.greenDim, border: `1px solid ${C.green}30`, borderRadius: 10, padding: '20px 28px', maxWidth: 400, margin: '0 auto' }}>
+                <div style={{ fontSize: 18, fontWeight: 800, color: C.green, marginBottom: 6 }}>✓ You're in.</div>
+                <div style={{ fontSize: 14, color: C.mid, lineHeight: 1.6 }}>
+                  You're #{count} on the waitlist for {joinedNiche || 'outdoor creators'}. We'll email you when Monday Brief goes live.
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* ── Footer ── */}
+        <footer style={S.footer}>
+          <div style={{ ...S.logo, fontSize: 13 }}>
+            <div style={{ ...S.dot, width: 6, height: 6 }} />
+            DownRange<span style={{ color: C.gold }}>Creator</span>
+          </div>
+          <div style={{ fontSize: 12, color: C.muted }}>YouTube intel for the niche nobody built for.</div>
+          <div style={{ fontSize: 11, color: C.muted }}>© 2026 DownRange Co. · Washington State</div>
+        </footer>
+
       </div>
     </>
   );
