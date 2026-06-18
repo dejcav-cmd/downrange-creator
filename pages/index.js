@@ -341,6 +341,121 @@ function MondayBriefEmail({data,niche,active}){
           </div>
         )}
 
+        {/* TITLE A/B VARIANTS */}
+        {data.nextVideo?.titleVariants?.length>0&&(
+          <div style={{marginBottom:20}}>
+            <SL icon="🔤" text="3 Title Variations to Test"/>
+            <div style={{display:'flex',flexDirection:'column',gap:8}}>
+              {data.nextVideo.titleVariants.map((v,i)=>(
+                <div key={i} style={{backgroundColor:i===0?`${C.gold}0A`:C.s2,border:`1px solid ${i===0?C.goldBorder:C.border}`,borderRadius:8,padding:'10px 14px'}}>
+                  <div style={{display:'flex',gap:8,alignItems:'flex-start',marginBottom:5}}>
+                    <span style={{fontSize:10,fontWeight:800,color:i===0?C.gold:C.muted,textTransform:'uppercase',flexShrink:0,marginTop:1,width:20}}>{i===0?'★':String.fromCharCode(65+i)}</span>
+                    <span style={{fontSize:12,fontWeight:i===0?700:600,color:i===0?C.text:C.mid,lineHeight:1.4}}>"{v.title}"</span>
+                  </div>
+                  <div style={{display:'flex',gap:6,alignItems:'center',paddingLeft:28}}>
+                    <span style={{fontSize:10,fontWeight:700,color:i===0?C.gold:C.muted,backgroundColor:`${i===0?C.gold:'#8C8F96'}18`,padding:'1px 7px',borderRadius:3}}>{v.trigger}</span>
+                    <span style={{fontSize:10,color:C.muted}}>{v.why}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div style={{fontSize:11,color:C.muted,marginTop:8}}>↳ Star = recommended. Run A/B test by uploading the same video twice with different titles (unlisted first, then switch).</div>
+          </div>
+        )}
+
+        {/* UPLOAD CHECKLIST */}
+        {data.nextVideo?.uploadChecklist?.length>0&&(
+          <div style={{marginBottom:20}}>
+            <SL icon="✅" text="Pre-Publish Checklist"/>
+            <div style={{backgroundColor:C.s2,border:`1px solid ${C.border}`,borderRadius:9,padding:'14px 16px'}}>
+              {data.nextVideo.uploadChecklist.map((item,i)=>(
+                <div key={i} style={{display:'flex',gap:10,alignItems:'flex-start',padding:'6px 0',borderBottom:i<data.nextVideo.uploadChecklist.length-1?`1px solid ${C.border}`:'none'}}>
+                  <span style={{fontSize:12,color:C.green,flexShrink:0,marginTop:1}}>☐</span>
+                  <span style={{fontSize:12,color:C.mid,lineHeight:1.5}}>{item}</span>
+                </div>
+              ))}
+              {data.nextVideo.pinComment&&(
+                <div style={{marginTop:12,paddingTop:10,borderTop:`1px solid ${C.border}`}}>
+                  <div style={{fontSize:10,color:C.muted,textTransform:'uppercase',letterSpacing:'0.08em',marginBottom:5}}>📌 Pin this comment immediately after publishing</div>
+                  <div style={{fontSize:12,color:C.text,fontStyle:'italic',lineHeight:1.6}}>"{data.nextVideo.pinComment}"</div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* CONTENT REPURPOSING */}
+        {data.contentRepurposing&&(
+          <div style={{marginBottom:20}}>
+            <SL icon="♻️" text="Repurpose This Video"/>
+            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8}}>
+              {/* Blog outline */}
+              {data.contentRepurposing.blogOutline&&(
+                <div style={{backgroundColor:C.s2,border:`1px solid ${C.border}`,borderRadius:8,padding:'12px 14px'}}>
+                  <div style={{fontSize:9,fontWeight:700,color:C.blue,textTransform:'uppercase',letterSpacing:'0.1em',marginBottom:7}}>📝 Blog Post</div>
+                  <div style={{fontSize:11,fontWeight:700,color:C.text,marginBottom:8,lineHeight:1.4}}>{data.contentRepurposing.blogOutline.title}</div>
+                  {data.contentRepurposing.blogOutline.sections?.map((s,i)=>(
+                    <div key={i} style={{fontSize:11,color:C.muted,marginBottom:4,display:'flex',gap:6}}>
+                      <span style={{color:C.blue,flexShrink:0}}>H2</span><span>{s}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {/* Social captions */}
+              {data.contentRepurposing.socialCaptions&&(
+                <div style={{backgroundColor:C.s2,border:`1px solid ${C.border}`,borderRadius:8,padding:'12px 14px'}}>
+                  <div style={{fontSize:9,fontWeight:700,color:C.purple,textTransform:'uppercase',letterSpacing:'0.1em',marginBottom:7}}>📱 Social Captions</div>
+                  {[['Instagram',data.contentRepurposing.socialCaptions.instagram],['Twitter/X',data.contentRepurposing.socialCaptions.twitter],['Facebook',data.contentRepurposing.socialCaptions.facebook]].map(([platform,caption])=>(
+                    <div key={platform} style={{marginBottom:8,paddingBottom:8,borderBottom:`1px solid ${C.border}`}}>
+                      <div style={{fontSize:9,color:C.muted,textTransform:'uppercase',marginBottom:3}}>{platform}</div>
+                      <div style={{fontSize:10,color:C.mid,lineHeight:1.5}}>{caption?.slice(0,120)}{caption?.length>120?'…':''}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {/* Newsletter + Reddit */}
+              {data.contentRepurposing.newsletterExcerpt&&(
+                <div style={{backgroundColor:C.s2,border:`1px solid ${C.border}`,borderRadius:8,padding:'12px 14px'}}>
+                  <div style={{fontSize:9,fontWeight:700,color:C.gold,textTransform:'uppercase',letterSpacing:'0.1em',marginBottom:7}}>✉️ Newsletter Teaser</div>
+                  <div style={{fontSize:11,color:C.mid,lineHeight:1.6}}>{data.contentRepurposing.newsletterExcerpt}</div>
+                </div>
+              )}
+              {data.contentRepurposing.redditPost&&(
+                <div style={{backgroundColor:C.s2,border:`1px solid ${C.border}`,borderRadius:8,padding:'12px 14px'}}>
+                  <div style={{fontSize:9,fontWeight:700,color:C.red,textTransform:'uppercase',letterSpacing:'0.1em',marginBottom:7}}>🔴 Reddit — {data.contentRepurposing.redditPost.subreddit}</div>
+                  <div style={{fontSize:11,fontWeight:700,color:C.text,marginBottom:5}}>{data.contentRepurposing.redditPost.title}</div>
+                  <div style={{fontSize:11,color:C.mid,lineHeight:1.55}}>{data.contentRepurposing.redditPost.body}</div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* MONETIZATION ANGLE */}
+        {data.monetizationAngle&&(
+          <div style={{marginBottom:20}}>
+            <SL icon="💰" text="Monetization Angle"/>
+            <div style={{backgroundColor:`${C.green}08`,border:`1px solid ${C.greenBorder}`,borderRadius:9,padding:'14px 16px'}}>
+              <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12,marginBottom:12}}>
+                <div>
+                  <div style={{fontSize:9,color:C.muted,textTransform:'uppercase',marginBottom:4}}>Best affiliate category</div>
+                  <div style={{fontSize:13,fontWeight:700,color:C.text}}>{data.monetizationAngle.primaryProduct}</div>
+                </div>
+                <div>
+                  <div style={{fontSize:9,color:C.muted,textTransform:'uppercase',marginBottom:4}}>Estimated commission</div>
+                  <div style={{fontSize:13,fontWeight:700,color:C.green}}>{data.monetizationAngle.estimatedCommission}</div>
+                </div>
+              </div>
+              {data.monetizationAngle.ctaScript&&(
+                <div style={{backgroundColor:C.s2,border:`1px solid ${C.border}`,borderRadius:6,padding:'10px 12px'}}>
+                  <div style={{fontSize:9,color:C.muted,textTransform:'uppercase',marginBottom:5}}>🎙 Say this on camera</div>
+                  <div style={{fontSize:12,color:C.text,fontStyle:'italic',lineHeight:1.6}}>"{data.monetizationAngle.ctaScript}"</div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
         {/* OUTLIERS REFERENCE */}
         <div>
           <SL icon="📈" text="This Week's Top Performers" extra={`Baseline ~${Math.round((data.avgChannelViews||38000)/1000)}K`}/>
@@ -758,17 +873,17 @@ export default function Home(){
           </div>
         </div>
 
-        <footer style={{padding:'28px 36px',display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:12}}>
-          <img src='/logo-sm.png' alt='DownRange Co.' style={{height:28,width:'auto'}}/>
-          <div style={{fontSize:11,color:C.muted,textAlign:'center',lineHeight:1.8}}>
-            Part of <a href='https://downrangeco.com' target='_blank' rel='noopener' style={{color:C.gold,textDecoration:'none'}}>DownRange Co.</a> · 
-            <a href='https://downrangeco.com' target='_blank' rel='noopener' style={{color:C.mid,textDecoration:'none'}}>News Portal</a> · 
-            intel.downrangeco.com<br/>
-            Intelligence powered by multiple sources including the DownRange News Portal, YouTube Data API, and the DownRange Intelligence Engine.
+        <footer style={{padding:'32px 36px',borderTop:`1px solid ${C.border}`,display:'flex',flexDirection:'column',alignItems:'center',gap:16}}>
+          {/* Logo top */}
+          <img src='/logo-sm.png' alt='DownRange Co. Intelligence Data' style={{height:32,width:'auto',opacity:0.9}}/>
+          {/* Copyright middle */}
+          <div style={{fontSize:11,color:C.muted,textAlign:'center'}}>
+            © 2026 DownRange Co. All rights reserved. Content analysis for informational purposes only. Washington State.
           </div>
-          <div style={{fontSize:11,color:C.muted,textAlign:'right'}}>
-            © 2026 DownRange Co. All rights reserved.<br/>
-            Content analysis for informational purposes only. Washington State.
+          {/* Attribution bottom */}
+          <div style={{fontSize:11,color:C.muted,textAlign:'center',lineHeight:1.8,borderTop:`1px solid ${C.border}`,paddingTop:14,width:'100%',maxWidth:680}}>
+            Part of <a href='https://downrangeco.com' target='_blank' rel='noopener' style={{color:C.gold,textDecoration:'none'}}>DownRange Co.</a> · <a href='https://downrangeco.com' target='_blank' rel='noopener' style={{color:C.mid,textDecoration:'none'}}>News Portal</a> · intel.downrangeco.com<br/>
+            Intelligence powered by multiple sources including the DownRange News Portal, YouTube Data API, and the DownRange Intelligence Engine.
           </div>
         </footer>
       </div>

@@ -1,1 +1,255 @@
-{"niche":"Deer Hunting","channelsScanned":14,"videosAnalyzed":312,"avgChannelViews":42000,"nicheHealth":{"score":78,"label":"Growing","trend":"rising","insight":"Trail cam and early scouting content up 31% as pre-season interest builds across Midwest","weeklyGrowth":"+12%"},"outliers":[{"rank":1,"title":"I Tested 5 Budget Trail Cams Under $60 — One Outperformed My $200 Setup","channel":"BuckshotBilly","views":312000,"multiplier":"5.2x","daysAgo":7,"length":"16:42","whyItWorked":"Budget angle + specific price point + genuine surprise result hits pre-season anxiety perfectly","titleType":"How-to","thumbnailStyle":"Split: trail cams lined up left, shocked creator right"},{"rank":2,"title":"Why Most Hunters Set Up Their Tree Stand WRONG (Don't Make This Mistake)","channel":"WhitetailWarrior","views":198000,"multiplier":"3.9x","daysAgo":13,"length":"11:28","whyItWorked":"Controversy + implied viewer mistake = impossible to scroll past. Negative framing outperforms positive.","titleType":"Controversy","thumbnailStyle":"Dark forest bg, red X overlay, creator pointing down"},{"rank":3,"title":"The 3 Deer Foods That Actually Work — I Tested All Season","channel":"MidwestBucks","views":156000,"multiplier":"3.2x","daysAgo":18,"length":"22:05","whyItWorked":"Specific number + full season test = proof-based authority. Viewers trust data over opinion.","titleType":"List","thumbnailStyle":"Three food items on dark bg, large number 3 in corner, green glow"}],"patterns":{"titleFormula":{"formula":"Controversy or Number + Test/Result Verb + Specific Subject + Price or Season Anchor","parts":[{"text":"[Number] or Why","type":"number"},{"text":"Tested / Works / WRONG","type":"verb"},{"text":"Trail Cams / Tree Stand","type":"topic"},{"text":"— Result or Mistake","type":"hook"}]},"bestLength":{"value":"14-18 min","confidence":83},"bestDay":{"value":"Wednesday","confidence":76},"bestTime":{"value":"2–5pm EST","confidence":71},"thumbnailPattern":{"value":"Dark forest background, split-screen (product left / shocked creator right), bold white uppercase text overlay — outperforms single-subject by 2.1×","confidence":79}},"nextVideo":{"title":"I Tested 5 Budget Trail Cams Under $60 — One Outperformed My $200 Setup","viralScore":87,"angle":"Budget-framing with genuine surprise result taps pre-season buying anxiety — search traffic for trail cams spikes now, 6 weeks before opener","length":"15-17 min","publishDay":"Wednesday","publishTime":"3pm EST","thumbnailConcept":{"leftSide":"5 trail cams lined up on dark surface","rightSide":"Your shocked face, eyebrows raised","textOverlay":"5 BUDGET TRAIL CAMS TESTED","bgColor":"dark forest green","emoji":"🦌"},"scriptHook":"Most hunters spend $150 to $200 on trail cameras every season and never actually capture the buck they're hunting. Today I bought five budget cameras — all under sixty dollars — and ran them on the same food plot for three weeks straight. One of them outperformed my two-hundred-dollar setup so badly I went back and bought two more. Here's the honest breakdown.","hooks":["I spent $300 testing budget trail cams so you don't have to. The results genuinely surprised me.","Six weeks before opener and most hunters still don't know which trail cam is worth buying. I tested five. Here's the breakdown.","Stop wasting money on expensive trail cams. I found a $60 option that beat everything in my kit — and I've been hunting 14 years."],"reasons":["5 outliers this week used budget-framing with specific price points — viewers are in pre-season buying mode right now","Trail cam content spikes 6-8 weeks before opener in every major whitetail region — posting Wednesday captures the rising search curve","Shocked reaction thumbnails are outperforming neutral faces by 2.1× in outdoor gear content this month"]},"contentCalendar":[{"week":"Week 1","title":"I Tested 5 Budget Trail Cams Under $60","angle":"Budget anxiety + pre-season timing + genuine surprise result = high CTR","day":"Wednesday"},{"week":"Week 2","title":"The Perfect Tree Stand Setup for Early Season (Most Hunters Do This Wrong)","angle":"Controversy + mistake framing — viewer feels compelled to verify they're not making the error","day":"Wednesday"},{"week":"Week 3","title":"3 Food Plot Mistakes That Cost You Deer Every Year","angle":"Loss framing drives higher CTR than gain framing in outdoor niche — confirmed by this week's outliers","day":"Thursday"},{"week":"Week 4","title":"My Full Pre-Season Scouting System — Step by Step","angle":"System/framework content builds long watch time + positions you as the authority heading into season","day":"Wednesday"}],"competitorPulse":[{"channel":"WhitetailWarrior","lastVideo":"How I Pattern Big Bucks in 3 Days","views":89000,"note":"Long-form walkthroughs (20+ min) consistently outperform shorter content on this channel — viewers want depth on scouting topics"},{"channel":"BuckshotBilly","lastVideo":"The Budget Hunting Gear That Actually Works","views":67000,"note":"Budget angle is working well — confirms the price-anxiety thesis. Good timing for your trail cam video."},{"channel":"MidwestBucks","lastVideo":"Early Season Stand Selection Guide","views":52000,"note":"Posted Tuesday, underperformed vs his Wednesday/Thursday uploads — timing data confirmed in your favor"}],"shortsIdeas":["30-sec: Side-by-side trail cam footage comparison — budget vs expensive, reveal the winner at the end (drives to full video)","45-sec: One tree stand mistake that costs you deer — quick tip teaser from your Week 2 long-form, ends with 'full guide in bio'","60-sec: The best food plot placement rule in under a minute — builds search authority, captures 'food plot tips' queries year-round"],"trendingQuestions":["What's the best budget trail camera for under $100 in 2026?","How far should I hang a tree stand from a food plot?","When should I start checking trail cams before whitetail season?"],"seasonalAlert":{"active":true,"title":"Pre-Season Window Opens Now — 6 Weeks to Opener","content":"Whitetail search volume spikes 8-10 weeks before opener and peaks 3-4 weeks out. You're in the early window right now. Trail cam, stand setup, and scouting content posted this week will ride the rising search curve before the feed gets crowded. Miss this window and you're posting into saturation.","urgency":"High"},"gapAnalysis":{"title":"No dominant video for 'best budget trail cam 2026' under 500K subs","reason":"Most trail cam reviews cover premium $200+ options from large channels. Budget-focused content for hunters with tighter budgets is dramatically undersupplied vs demand.","urgency":"High"}}
+{
+  "niche": "Deer Hunting",
+  "channelsScanned": 14,
+  "videosAnalyzed": 312,
+  "avgChannelViews": 42000,
+  "nicheHealth": {
+    "score": 78,
+    "label": "Growing",
+    "trend": "rising",
+    "insight": "Trail cam and early scouting content up 31% as pre-season interest builds across Midwest",
+    "weeklyGrowth": "+12%"
+  },
+  "outliers": [
+    {
+      "rank": 1,
+      "title": "I Tested 5 Budget Trail Cams Under $60 \u2014 One Outperformed My $200 Setup",
+      "channel": "BuckshotBilly",
+      "views": 312000,
+      "multiplier": "5.2x",
+      "daysAgo": 7,
+      "length": "16:42",
+      "whyItWorked": "Budget angle + specific price point + genuine surprise result hits pre-season anxiety perfectly",
+      "titleType": "How-to",
+      "thumbnailStyle": "Split: trail cams lined up left, shocked creator right"
+    },
+    {
+      "rank": 2,
+      "title": "Why Most Hunters Set Up Their Tree Stand WRONG (Don't Make This Mistake)",
+      "channel": "WhitetailWarrior",
+      "views": 198000,
+      "multiplier": "3.9x",
+      "daysAgo": 13,
+      "length": "11:28",
+      "whyItWorked": "Controversy + implied viewer mistake = impossible to scroll past. Negative framing outperforms positive.",
+      "titleType": "Controversy",
+      "thumbnailStyle": "Dark forest bg, red X overlay, creator pointing down"
+    },
+    {
+      "rank": 3,
+      "title": "The 3 Deer Foods That Actually Work \u2014 I Tested All Season",
+      "channel": "MidwestBucks",
+      "views": 156000,
+      "multiplier": "3.2x",
+      "daysAgo": 18,
+      "length": "22:05",
+      "whyItWorked": "Specific number + full season test = proof-based authority. Viewers trust data over opinion.",
+      "titleType": "List",
+      "thumbnailStyle": "Three food items on dark bg, large number 3 in corner, green glow"
+    }
+  ],
+  "patterns": {
+    "titleFormula": {
+      "formula": "Controversy or Number + Test/Result Verb + Specific Subject + Price or Season Anchor",
+      "parts": [
+        {
+          "text": "[Number] or Why",
+          "type": "number"
+        },
+        {
+          "text": "Tested / Works / WRONG",
+          "type": "verb"
+        },
+        {
+          "text": "Trail Cams / Tree Stand",
+          "type": "topic"
+        },
+        {
+          "text": "\u2014 Result or Mistake",
+          "type": "hook"
+        }
+      ]
+    },
+    "bestLength": {
+      "value": "14-18 min",
+      "confidence": 83
+    },
+    "bestDay": {
+      "value": "Wednesday",
+      "confidence": 76
+    },
+    "bestTime": {
+      "value": "2\u20135pm EST",
+      "confidence": 71
+    },
+    "thumbnailPattern": {
+      "value": "Dark forest background, split-screen (product left / shocked creator right), bold white uppercase text overlay \u2014 outperforms single-subject by 2.1\u00d7",
+      "confidence": 79
+    }
+  },
+  "nextVideo": {
+    "title": "I Tested 5 Budget Trail Cams Under $60 \u2014 One Outperformed My $200 Setup",
+    "viralScore": 87,
+    "angle": "Budget-framing with genuine surprise result taps pre-season buying anxiety \u2014 search traffic for trail cams spikes now, 6 weeks before opener",
+    "length": "15-17 min",
+    "publishDay": "Wednesday",
+    "publishTime": "3pm EST",
+    "thumbnailConcept": {
+      "leftSide": "5 trail cams lined up on dark surface",
+      "rightSide": "Your shocked face, eyebrows raised",
+      "textOverlay": "5 BUDGET TRAIL CAMS TESTED",
+      "bgColor": "dark forest green",
+      "emoji": "\ud83e\udd8c"
+    },
+    "scriptHook": "Most hunters spend $150 to $200 on trail cameras every season and never actually capture the buck they're hunting. Today I bought five budget cameras \u2014 all under sixty dollars \u2014 and ran them on the same food plot for three weeks straight. One of them outperformed my two-hundred-dollar setup so badly I went back and bought two more. Here's the honest breakdown.",
+    "hooks": [
+      "I spent $300 testing budget trail cams so you don't have to. The results genuinely surprised me.",
+      "Six weeks before opener and most hunters still don't know which trail cam is worth buying. I tested five. Here's the breakdown.",
+      "Stop wasting money on expensive trail cams. I found a $60 option that beat everything in my kit \u2014 and I've been hunting 14 years."
+    ],
+    "reasons": [
+      "5 outliers this week used budget-framing with specific price points \u2014 viewers are in pre-season buying mode right now",
+      "Trail cam content spikes 6-8 weeks before opener in every major whitetail region \u2014 posting Wednesday captures the rising search curve",
+      "Shocked reaction thumbnails are outperforming neutral faces by 2.1\u00d7 in outdoor gear content this month"
+    ],
+    "titleVariants": [
+      {
+        "title": "I Tested 5 Budget Trail Cams Under $60 \u2014 One Outperformed My $200 Setup",
+        "trigger": "Budget anxiety + disbelief",
+        "why": "Specific price points + impossible-sounding result creates a curiosity gap viewers can't scroll past"
+      },
+      {
+        "title": "Why I'm Replacing My $200 Trail Cam With This $60 Option",
+        "trigger": "Controversy + authority",
+        "why": "First-person switch story implies you've done the research \u2014 viewer trusts the conclusion"
+      },
+      {
+        "title": "The $60 Trail Cam That Beat My Entire $800 Setup (Honest Review)",
+        "trigger": "Proof-based claim",
+        "why": "Specific total investment number + honest framing removes skepticism \u2014 review format converts well in gear niches"
+      }
+    ],
+    "tags": [
+      "trail camera review",
+      "best trail camera 2026",
+      "budget trail cam",
+      "deer hunting cameras",
+      "trail cam comparison",
+      "whitetail hunting gear",
+      "hunting trail cameras",
+      "best budget trail camera",
+      "trail camera tips",
+      "deer hunting equipment"
+    ],
+    "descriptionOpener": "Most hunters are spending 3x more than they need to on trail cameras. In this video, I test 5 budget options all under $60 against my $200 setup on the same food plot for three weeks. The results genuinely surprised me \u2014 and one of these cameras is now my go-to for early season scouting.",
+    "pinComment": "What trail cam are you running this season and what did you pay for it? Drop it below \u2014 I'm tracking the data for a follow-up video.",
+    "uploadChecklist": [
+      "Add all 10 tags from the brief before publishing",
+      "Paste the description opener as the first 3 lines of your description",
+      "Set end screen at 13:45 pointing to your 'Tree Stand Setup' video",
+      "Pin the comment question within 10 minutes of publishing to seed engagement",
+      "Share to r/whitetail and r/deerhunting within 1 hour of upload"
+    ]
+  },
+  "contentCalendar": [
+    {
+      "week": "Week 1",
+      "title": "I Tested 5 Budget Trail Cams Under $60",
+      "angle": "Budget anxiety + pre-season timing + genuine surprise result = high CTR",
+      "day": "Wednesday"
+    },
+    {
+      "week": "Week 2",
+      "title": "The Perfect Tree Stand Setup for Early Season (Most Hunters Do This Wrong)",
+      "angle": "Controversy + mistake framing \u2014 viewer feels compelled to verify they're not making the error",
+      "day": "Wednesday"
+    },
+    {
+      "week": "Week 3",
+      "title": "3 Food Plot Mistakes That Cost You Deer Every Year",
+      "angle": "Loss framing drives higher CTR than gain framing in outdoor niche \u2014 confirmed by this week's outliers",
+      "day": "Thursday"
+    },
+    {
+      "week": "Week 4",
+      "title": "My Full Pre-Season Scouting System \u2014 Step by Step",
+      "angle": "System/framework content builds long watch time + positions you as the authority heading into season",
+      "day": "Wednesday"
+    }
+  ],
+  "competitorPulse": [
+    {
+      "channel": "WhitetailWarrior",
+      "lastVideo": "How I Pattern Big Bucks in 3 Days",
+      "views": 89000,
+      "note": "Long-form walkthroughs (20+ min) consistently outperform shorter content on this channel \u2014 viewers want depth on scouting topics"
+    },
+    {
+      "channel": "BuckshotBilly",
+      "lastVideo": "The Budget Hunting Gear That Actually Works",
+      "views": 67000,
+      "note": "Budget angle is working well \u2014 confirms the price-anxiety thesis. Good timing for your trail cam video."
+    },
+    {
+      "channel": "MidwestBucks",
+      "lastVideo": "Early Season Stand Selection Guide",
+      "views": 52000,
+      "note": "Posted Tuesday, underperformed vs his Wednesday/Thursday uploads \u2014 timing data confirmed in your favor"
+    }
+  ],
+  "shortsIdeas": [
+    "30-sec: Side-by-side trail cam footage comparison \u2014 budget vs expensive, reveal the winner at the end (drives to full video)",
+    "45-sec: One tree stand mistake that costs you deer \u2014 quick tip teaser from your Week 2 long-form, ends with 'full guide in bio'",
+    "60-sec: The best food plot placement rule in under a minute \u2014 builds search authority, captures 'food plot tips' queries year-round"
+  ],
+  "trendingQuestions": [
+    "What's the best budget trail camera for under $100 in 2026?",
+    "How far should I hang a tree stand from a food plot?",
+    "When should I start checking trail cams before whitetail season?"
+  ],
+  "seasonalAlert": {
+    "active": true,
+    "title": "Pre-Season Window Opens Now \u2014 6 Weeks to Opener",
+    "content": "Whitetail search volume spikes 8-10 weeks before opener and peaks 3-4 weeks out. You're in the early window right now. Trail cam, stand setup, and scouting content posted this week will ride the rising search curve before the feed gets crowded. Miss this window and you're posting into saturation.",
+    "urgency": "High"
+  },
+  "gapAnalysis": {
+    "title": "No dominant video for 'best budget trail cam 2026' under 500K subs",
+    "reason": "Most trail cam reviews cover premium $200+ options from large channels. Budget-focused content for hunters with tighter budgets is dramatically undersupplied vs demand.",
+    "urgency": "High"
+  },
+  "contentRepurposing": {
+    "blogOutline": {
+      "title": "5 Budget Trail Cameras Under $60 \u2014 One Outperformed My $200 Setup",
+      "intro": "I spent three weeks running five budget trail cameras on the same food plot, side by side with my $200 flagship. The results changed what I recommend to every hunter asking me about gear.",
+      "sections": [
+        "Why Most Hunters Overspend on Trail Cameras",
+        "The 5 Budget Cameras I Tested (And My Methodology)",
+        "Results: Head-to-Head Comparison by Category",
+        "The Clear Winner (And Why It Surprised Me)",
+        "My Revised Trail Camera Buying Guide for 2026"
+      ],
+      "cta": "Watch the full video test with footage comparison on my YouTube channel \u2014 link in bio."
+    },
+    "newsletterExcerpt": "This week I ran a 3-week test of 5 trail cameras all under $60 against my $200 flagship on the same food plot. The findings might save you a lot of money before opener. Full breakdown + footage comparison on YouTube \u2014 link below.",
+    "redditPost": {
+      "subreddit": "r/whitetail",
+      "title": "Tested 5 trail cams under $60 for 3 weeks \u2014 one beat my $200 setup",
+      "body": "Just posted the full results on YouTube. Ran all 5 on the same food plot simultaneously so the comparison is apples-to-apples. The winner was one I almost didn't include. Happy to answer questions in the comments."
+    },
+    "socialCaptions": {
+      "instagram": "Spent 3 weeks testing 5 budget trail cams under $60. One of them outperformed my $200 flagship. Full breakdown + footage comparison is live on YouTube \u2014 link in bio. \ud83e\udd8c\ud83d\udcf7 #deerhunting #trailcam #huntinggear #whitetail #hunting2026 #budgethunting",
+      "twitter": "I ran 5 trail cams under $60 for 3 weeks against my $200 setup. The $60 winner is now my main cam. Full test on YouTube \ud83e\udd8c",
+      "facebook": "Three weeks ago I set up 5 budget trail cameras (all under $60) on the same food plot as my $200 flagship. I wanted an honest comparison before recommending anything to you guys. The results were eye-opening \u2014 one of the budget options is now my primary scouting cam. Full video with actual footage comparison just went up on YouTube. Drop your current trail cam setup in the comments \u2014 I'm tracking data for a follow-up."
+    }
+  },
+  "monetizationAngle": {
+    "primaryProduct": "Trail cameras and game cameras ($40\u2013$300 range)",
+    "estimatedCommission": "8\u201312% via Amazon Associates or BassPro affiliate program",
+    "ctaScript": "Links to everything I tested are in the description below \u2014 I do get a small commission if you buy through them, which helps keep these tests free. But I'll always tell you honestly if something isn't worth it.",
+    "sponsorCategories": [
+      "Trail camera brands (Browning, Stealth Cam, Reconyx)",
+      "Hunting gear retailers (BassPro, Cabelas, MidwayUSA)"
+    ]
+  }
+}
