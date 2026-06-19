@@ -533,6 +533,130 @@ function VidIQMock(){const ideas=[{s:'Very High',t:'10 Mistakes New Deer Hunters
 
 function DownRangeMock(){return(<div style={{background:'#09090D',border:`1px solid ${C.goldBorder}`,borderRadius:12,overflow:'hidden'}}><div style={{background:'#0D0F13',borderBottom:`1px solid ${C.border}`,padding:'11px 18px',display:'flex',alignItems:'center',gap:12}}><div style={{display:'flex',gap:6}}>{['#FF5F57','#FFBD2E','#28CA41'].map(c=><div key={c} style={{width:11,height:11,borderRadius:'50%',backgroundColor:c}}/>)}</div><div style={{flex:1,background:C.s2,border:`1px solid ${C.border}`,borderRadius:6,padding:'3px 12px',fontSize:11,color:C.muted,textAlign:'center'}}>intel@downrangeintel.com</div><Dot color={C.green} size={6}/></div><div style={{background:C.s1,borderBottom:`1px solid ${C.border}`,padding:'12px 20px'}}><div style={{fontSize:11,color:C.muted,marginBottom:3}}><strong style={{color:C.mid}}>From: </strong>DownRange Intel — Monday Brief</div><div style={{fontSize:13,fontWeight:700,color:C.text}}>🎯 Monday Brief — Archery & Bowhunting · Week 24</div></div><div style={{padding:'18px 20px'}}><div style={{background:C.s2,border:`1px solid ${C.border}`,borderRadius:7,padding:'10px 14px',marginBottom:14,display:'flex',gap:14,alignItems:'center'}}><div style={{flex:1}}><div style={{fontSize:9,color:C.muted,marginBottom:5,textTransform:'uppercase',fontWeight:700}}>NICHE HEALTH — Archery & Bowhunting</div><div style={{height:3,background:C.s4,borderRadius:2}}><div style={{height:'100%',width:'76%',backgroundColor:C.green,borderRadius:2}}/></div></div><div style={{fontSize:18,fontWeight:900,color:C.green}}>76</div><div style={{fontSize:12,fontWeight:700,color:C.mid}}>+11%</div></div><div style={{background:`${C.gold}0A`,border:`1px solid ${C.goldBorder}`,borderRadius:10,padding:'14px 16px',marginBottom:12}}><div style={{fontSize:9,fontWeight:700,color:C.muted,textTransform:'uppercase',letterSpacing:'0.1em',marginBottom:8}}>🎯 YOUR VIDEO THIS WEEK</div><div style={{fontSize:15,fontWeight:900,color:C.text,lineHeight:1.25,marginBottom:10,letterSpacing:'-0.3px'}}>"I Shot 100 Arrows a Day for 30 Days — Here's What Actually Changed"</div><div style={{display:'flex',gap:8,flexWrap:'wrap'}}>{[['Post','Thursday'],['Length','20-22 min'],['Time','7pm EST'],['Score','84/100']].map(([l,v])=><div key={l} style={{background:C.s3,border:`1px solid ${l==='Score'?C.goldBorder:C.border}`,borderRadius:5,padding:'5px 10px',textAlign:'center'}}><div style={{fontSize:9,color:C.muted,textTransform:'uppercase',marginBottom:1}}>{l}</div><div style={{fontSize:11,fontWeight:700,color:l==='Score'?C.gold:C.text}}>{v}</div></div>)}</div></div><div style={{background:C.s2,border:`1px solid ${C.border}`,borderRadius:8,padding:'11px 14px',marginBottom:12}}><div style={{fontSize:9,fontWeight:700,color:C.muted,textTransform:'uppercase',letterSpacing:'0.1em',marginBottom:7}}>🎙 READ ON CAMERA (first 30 sec)</div><div style={{fontSize:12,color:C.text,lineHeight:1.7,fontStyle:'italic'}}>"Thirty days ago I made myself a deal — one hundred arrows every single day, no exceptions. I filmed every session. By day fourteen something clicked that I've been trying to explain to students for years. By day thirty I had the tightest groups I've shot in twelve years of bowhunting..."</div></div><div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8,marginBottom:12}}><div style={{background:C.s2,border:`1px solid ${C.border}`,borderRadius:7,padding:'10px 12px'}}><div style={{fontSize:9,color:C.muted,textTransform:'uppercase',marginBottom:6}}>📅 4-WEEK CALENDAR</div>{['W1: 100-arrow 30-day challenge','W2: Recurve vs compound guide','W3: Release aid mistakes','W4: Pre-season shooting routine'].map((w,i)=><div key={i} style={{fontSize:10,color:C.mid,marginBottom:4}}>{w}</div>)}</div><div style={{background:C.s2,border:`1px solid ${C.border}`,borderRadius:7,padding:'10px 12px'}}><div style={{fontSize:9,color:C.muted,textTransform:'uppercase',marginBottom:6}}>⚡ SHORTS IDEAS</div>{['30s: Day 1 vs Day 30 arrow group','45s: Release aid fix quick tip','60s: Best archery warm-up drill'].map((s,i)=><div key={i} style={{fontSize:10,color:C.mid,marginBottom:4}}>{s}</div>)}</div></div></div><div style={{padding:'10px 18px',background:`${C.green}08`,borderTop:`1px solid ${C.greenBorder}`,display:'flex',gap:8,alignItems:'center'}}><span>✅</span><span style={{fontSize:11,color:C.green}}>Works for archery, deer hunting, CCW, waterfowl — any outdoor niche. Script hook + thumbnail + calendar + Shorts + seasonal. 0 hrs/week.</span></div></div>);}
 
+// ── PRICING TABS ──────────────────────────────────────────────────
+const ALL_SECTIONS=[
+  {icon:'🎯',name:'Your Video This Week',desc:'The one video to make this week — specific title, publish day, optimal time, viral score, and strategic angle. No guessing.',in:['lite','full','intel']},
+  {icon:'🎙',name:'Script Hook',desc:'Ready-to-read 2-3 sentence camera script for the first 30 seconds. Copy to clipboard — read it on camera verbatim.',in:['lite','full','intel']},
+  {icon:'🖼',name:'Thumbnail Blueprint',desc:'CSS-rendered thumbnail mockup showing exactly what goes left, right, and in text overlay. Build it in Canva in 8 minutes.',in:['lite','full','intel']},
+  {icon:'📈',name:'Niche Health Score',desc:'Weekly trend score (0–100) with growth percentage and a one-sentence market insight telling you if now is a good time to post.',in:['lite','full','intel']},
+  {icon:'📅',name:'4-Week Content Calendar',desc:'Full month of video titles, strategic angles, and optimal posting days — planned around your niche\'s seasonal and algorithm patterns.',in:['full','intel']},
+  {icon:'👁',name:'Competitor Pulse',desc:'3 channels in your niche tracked weekly — what they posted, how many views it got, and what that means for your next move.',in:['full','intel']},
+  {icon:'⚡',name:'Shorts Ideas',desc:'3 specific YouTube Shorts repurpose ideas with duration (30–60 sec), content angle, and how it drives back to your long-form video.',in:['full','intel']},
+  {icon:'💬',name:'Trending Questions',desc:"The top questions your niche audience is actively asking this week — in comments, Reddit, and search. Answer one in your hook.",in:['full','intel']},
+  {icon:'🗓',name:'Seasonal Alert',desc:'Outdoor season timing with urgency score — tells you exactly when the search curve is rising so you post before it peaks.',in:['full','intel']},
+  {icon:'🔤',name:'3 Title Variants',desc:'Three title options with the psychological trigger each uses (curiosity gap, controversy, budget anxiety) and A/B testing guidance.',in:['full','intel']},
+  {icon:'✅',name:'Upload Checklist',desc:'Five pre-publish action items specific to your video type — tags, description opener, card placement, end screen, and the exact comment to pin.',in:['full','intel']},
+  {icon:'♻️',name:'Content Repurposing',desc:'Blog post outline with H2 structure, Instagram/Twitter/Facebook captions, newsletter teaser, and a Reddit post — all generated and ready to paste.',in:['full','intel']},
+  {icon:'💰',name:'Monetization Angle',desc:'Best affiliate product category for this exact video, commission estimate, and the exact on-camera line to say so it doesn\'t sound like an ad.',in:['full','intel']},
+  {icon:'🔭',name:'On-Demand Scans',desc:'Run a full niche scan any time you want — not just Monday delivery. Custom niche, instant output, no waiting for the weekly cycle.',in:['intel']},
+  {icon:'🏆',name:'Multi-Niche Support',desc:'Track multiple content niches simultaneously. Run a deer hunting brief AND an archery brief. Separate Monday outputs per niche.',in:['intel']},
+  {icon:'📊',name:'Title Formula Library',desc:'Searchable, growing library of proven title structures from your niche\'s top performers — organized by content type and trigger.',in:['intel']},
+  {icon:'🚨',name:'Content Gap Alerts',desc:'Get notified the moment a significant content gap opens in your niche before competitors see it. First-mover advantage, automated.',in:['intel']},
+];
+
+const TIERS=[
+  {id:'lite',name:'Brief Lite',price:'$9.99',period:'/mo',tagline:'The three essentials. One video to make, one script to read, one thumbnail to build.',detail:'Delivered every Monday at 7am · 4 sections',color:C.blue,count:4},
+  {id:'full',name:'Brief Full',price:'$29',period:'/mo',tagline:'Complete weekly intelligence. Every section. Nothing left to research or figure out.',detail:'All 13 sections · Delivered Monday 7am · Founding rate',color:C.gold,count:13,featured:true},
+  {id:'intel',name:'Niche Intel',price:'$49',period:'/mo',tagline:'Full brief plus on-demand scans, multi-niche support, and real-time gap alerts.',detail:'17 features · Brief + on-demand intelligence',color:C.purple,count:17},
+];
+
+function PricingTabs({onCTA}){
+  const[tab,setTab]=useState('full');
+  const tier=TIERS.find(t=>t.id===tab);
+  const included=ALL_SECTIONS.filter(s=>s.in.includes(tab));
+  const excluded=ALL_SECTIONS.filter(s=>!s.in.includes(tab));
+  return(
+    <div style={{backgroundColor:C.s1,padding:'80px 24px',borderBottom:`1px solid ${C.border}`}} id="pricing">
+      <div style={{maxWidth:900,margin:'0 auto'}}>
+        {/* Header */}
+        <div style={{textAlign:'center',marginBottom:40}}>
+          <div style={{fontSize:10,fontWeight:700,color:C.gold,letterSpacing:'0.14em',textTransform:'uppercase',marginBottom:14}}>Preview Pricing</div>
+          <h2 style={{fontSize:'clamp(26px,3.8vw,42px)',fontWeight:900,letterSpacing:'-1.2px',marginBottom:12}}>Choose your plan.</h2>
+          <p style={{fontSize:15,color:C.muted,maxWidth:460,margin:'0 auto',lineHeight:1.7}}>Founding members lock in these rates permanently. Click a plan to see exactly what you get.</p>
+        </div>
+
+        {/* Tab buttons */}
+        <div style={{display:'flex',gap:10,justifyContent:'center',marginBottom:36,flexWrap:'wrap'}}>
+          {TIERS.map(t=>(
+            <button key={t.id} onClick={()=>setTab(t.id)} style={{fontFamily:'inherit',cursor:'pointer',borderRadius:10,padding:'14px 24px',border:`2px solid ${tab===t.id?t.color:C.border}`,backgroundColor:tab===t.id?`${t.color}12`:C.s2,transition:'all .18s',minWidth:160,textAlign:'center',position:'relative'}}>
+              {t.featured&&tab!==t.id&&<div style={{position:'absolute',top:-10,left:'50%',transform:'translateX(-50%)',backgroundColor:C.gold,color:'#000',fontSize:9,fontWeight:800,padding:'2px 10px',borderRadius:4,whiteSpace:'nowrap'}}>MOST VALUE</div>}
+              <div style={{fontSize:13,fontWeight:700,color:tab===t.id?t.color:C.mid,marginBottom:4}}>{t.name}</div>
+              <div style={{fontSize:24,fontWeight:900,color:tab===t.id?t.color:C.text,letterSpacing:'-1px',lineHeight:1}}>{t.price}<span style={{fontSize:12,fontWeight:500,color:C.muted}}>{t.period}</span></div>
+              <div style={{fontSize:10,color:C.muted,marginTop:4}}>{t.count} features</div>
+            </button>
+          ))}
+        </div>
+
+        {/* Selected tier detail */}
+        <div style={{backgroundColor:C.s2,border:`2px solid ${tier.color}30`,borderRadius:14,overflow:'hidden'}}>
+          {/* Tier header bar */}
+          <div style={{background:`linear-gradient(135deg,${tier.color}18,${tier.color}08)`,borderBottom:`1px solid ${tier.color}25`,padding:'24px 28px',display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:16}}>
+            <div>
+              <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:6}}>
+                <div style={{fontSize:22,fontWeight:900,color:tier.color,letterSpacing:'-1px'}}>{tier.price}<span style={{fontSize:13,fontWeight:500,color:C.muted}}>{tier.period}</span></div>
+                {tier.featured&&<span style={{fontSize:10,fontWeight:800,backgroundColor:C.gold,color:'#000',padding:'2px 8px',borderRadius:4}}>RECOMMENDED</span>}
+              </div>
+              <div style={{fontSize:14,fontWeight:700,color:C.text,marginBottom:4}}>{tier.name}</div>
+              <div style={{fontSize:13,color:C.muted,maxWidth:440,lineHeight:1.6}}>{tier.tagline}</div>
+            </div>
+            <div style={{textAlign:'right'}}>
+              <button onClick={onCTA} style={{fontSize:13,fontWeight:700,color:tier.id==='full'?'#000':C.text,backgroundColor:tier.id==='full'?C.gold:tier.color,padding:'12px 24px',borderRadius:8,border:'none',cursor:'pointer',fontFamily:'inherit',display:'block',marginBottom:8,whiteSpace:'nowrap',boxShadow:tier.id==='full'?`0 4px 16px ${C.goldGlow}`:'none'}}>
+                Request Early Access →
+              </button>
+              <div style={{fontSize:11,color:C.muted}}>{tier.detail}</div>
+            </div>
+          </div>
+
+          {/* Included sections */}
+          <div style={{padding:'24px 28px'}}>
+            <div style={{fontSize:11,fontWeight:700,color:C.green,textTransform:'uppercase',letterSpacing:'0.1em',marginBottom:16,display:'flex',alignItems:'center',gap:8}}>
+              <span>✓</span> What's included — {included.length} feature{included.length!==1?'s':''}
+            </div>
+            <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(260px,1fr))',gap:10,marginBottom:included.length&&excluded.length?28:0}}>
+              {included.map(s=>(
+                <div key={s.name} style={{backgroundColor:C.s3,border:`1px solid ${C.border}`,borderRadius:9,padding:'12px 14px',display:'flex',gap:10,alignItems:'flex-start'}}>
+                  <span style={{fontSize:18,flexShrink:0,marginTop:1}}>{s.icon}</span>
+                  <div>
+                    <div style={{fontSize:12,fontWeight:700,color:C.text,marginBottom:4}}>{s.name}</div>
+                    <div style={{fontSize:11,color:C.muted,lineHeight:1.55}}>{s.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Excluded sections */}
+            {excluded.length>0&&(
+              <>
+                <div style={{fontSize:11,fontWeight:700,color:C.muted,textTransform:'uppercase',letterSpacing:'0.1em',marginBottom:12,display:'flex',alignItems:'center',gap:8}}>
+                  <span>✗</span> Not included in this plan
+                </div>
+                <div style={{display:'flex',flexWrap:'wrap',gap:8}}>
+                  {excluded.map(s=>(
+                    <div key={s.name} style={{backgroundColor:C.s1,border:`1px solid ${C.border}`,borderRadius:6,padding:'6px 12px',display:'flex',gap:6,alignItems:'center',opacity:0.5}}>
+                      <span style={{fontSize:13}}>{s.icon}</span>
+                      <span style={{fontSize:11,color:C.muted,textDecoration:'line-through'}}>{s.name}</span>
+                    </div>
+                  ))}
+                </div>
+                <div style={{marginTop:16,fontSize:12,color:C.muted}}>
+                  Upgrade to{' '}
+                  {tab==='lite'&&<button onClick={()=>setTab('full')} style={{color:C.gold,backgroundColor:'transparent',border:'none',cursor:'pointer',fontFamily:'inherit',fontSize:12,fontWeight:700,padding:0}}>Brief Full ($29/mo) →</button>}
+                  {tab==='full'&&<button onClick={()=>setTab('intel')} style={{color:C.purple,backgroundColor:'transparent',border:'none',cursor:'pointer',fontFamily:'inherit',fontSize:12,fontWeight:700,padding:0}}>Niche Intel ($49/mo) →</button>}
+                  {' '}to unlock {excluded.length} more feature{excluded.length!==1?'s':''}.
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+
+        <div style={{marginTop:16,textAlign:'center',fontSize:12,color:C.muted}}>
+          Preview pricing locks in permanently when you join. No credit card to request access.
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── MAIN ──────────────────────────────────────────────────────────
 export default function Home(){
   const[niche,setNiche]=useState('');
@@ -804,33 +928,7 @@ export default function Home(){
         </div>
 
         {/* PRICING */}
-        <div style={{backgroundColor:C.s1,padding:'80px 24px',borderBottom:`1px solid ${C.border}`}} id="pricing">
-          <div style={{maxWidth:680,margin:'0 auto',textAlign:'center'}}>
-            <div style={{fontSize:10,fontWeight:700,color:C.gold,letterSpacing:'0.14em',textTransform:'uppercase',marginBottom:14}}>Preview Pricing</div>
-            <h2 style={{fontSize:'clamp(26px,3.8vw,42px)',fontWeight:900,letterSpacing:'-1.2px',marginBottom:14}}>Founding members get the best price. Forever.</h2>
-            <p style={{fontSize:15,color:C.muted,maxWidth:480,margin:'0 auto 44px',lineHeight:1.7}}>We're finalizing pricing during preview. Everyone who joins now locks in founding member rates.</p>
-            <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(180px,1fr))',gap:14}}>
-              {[{name:'Monday Brief',preview:'~$29/mo',note:'Weekly email brief',items:['Script hook','Thumbnail blueprint','4-week calendar','Competitor pulse','Shorts ideas','Seasonal alerts']},
-                {name:'Niche Intel',preview:'~$49/mo',note:'On-demand dashboard',items:['Everything in Brief','On-demand scans','Competitor tracking','Title formulas']},
-                {name:'Full Bundle',preview:'~$69/mo',note:'Best value',badge:'SAVE',items:['Monday Brief','Niche Intel','Sponsor Deals','Priority access']}].map(({name,preview,note,badge,items})=>(
-                <div key={name} className="ch" style={{backgroundColor:C.s2,border:`1px solid ${C.border}`,borderRadius:12,padding:'20px 18px',position:'relative',overflow:'hidden'}}>
-                  {badge&&<div style={{position:'absolute',top:0,left:'50%',transform:'translateX(-50%)',backgroundColor:C.green,color:'#000',fontSize:9,fontWeight:800,padding:'3px 10px',borderRadius:'0 0 6px 6px'}}>{badge}</div>}
-                  <div style={{marginTop:badge?14:0}}>
-                    <div style={{fontSize:13,fontWeight:700,color:C.text,marginBottom:4}}>{name}</div>
-                    <div style={{fontSize:20,fontWeight:900,color:C.gold,letterSpacing:'-0.8px',marginBottom:3}}>{preview}</div>
-                    <div style={{fontSize:10,color:C.muted,marginBottom:14}}>{note} · founding rate</div>
-                    <div style={{borderTop:`1px solid ${C.border}`,paddingTop:10}}>
-                      {items.map(f=><div key={f} style={{display:'flex',gap:6,marginBottom:6}}><span style={{color:C.gold,fontSize:10,marginTop:1}}>✓</span><span style={{fontSize:11,color:C.mid}}>{f}</span></div>)}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div style={{marginTop:20,padding:'14px 20px',backgroundColor:C.goldDim,border:`1px solid ${C.goldBorder}`,borderRadius:10,fontSize:13,color:C.mid}}>
-              Preview pricing locks in permanently when you join. Request access below to secure your founding rate.
-            </div>
-          </div>
-        </div>
+        <PricingTabs onCTA={()=>document.getElementById('access')?.scrollIntoView({behavior:'smooth'})}/>
 
         {/* FAQ */}
         <div ref={faqRef} style={{padding:'80px 24px',borderBottom:`1px solid ${C.border}`}} id="faq">
