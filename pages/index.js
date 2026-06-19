@@ -716,7 +716,7 @@ export default function Home(){
     <>
       <Head>
         <title>DownRange Co. Intelligence Data — YouTube Intel for Outdoor & Firearms Creators</title>
-        <meta name="description" content="Weekly Monday Brief for outdoor creators: script hook, thumbnail blueprint, 4-week calendar, competitor pulse, Shorts ideas, and seasonal alerts. intel.downrangeco.com"/>
+        <meta name="description" content="13-section Monday Brief for outdoor creators: script hook, thumbnail blueprint, 4-week calendar, Shorts ideas, competitor pulse, title variants, content repurposing, and monetization angle. intel.downrangeco.com"/>
         <meta property="og:title" content="DownRange Co. Intelligence Data — YouTube Intel for Outdoor Creators"/>
         <meta property="og:description" content="The Monday Brief for firearms, hunting, and outdoor YouTube creators."/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -738,8 +738,8 @@ export default function Home(){
             <Dot color={C.gold}/>DownRange<span style={{color:C.gold}}>Intel</span>
             <span style={{fontSize:10,color:C.muted,fontWeight:400,marginLeft:4,letterSpacing:'0.02em'}}>intel.downrangeco.com</span>
           </div>
-          <div style={{display:'flex',gap:26,fontSize:13,color:C.muted}}>
-            {[['Demo','#demo'],['Compare','#compare'],['Suite','#suite'],['Pricing','#pricing']].map(([l,h])=>(
+          <div style={{display:'flex',gap:32,fontSize:13,color:C.muted,letterSpacing:'0.01em'}}>
+            {[['Demo','#demo'],['Compare','#compare'],['Pricing','#pricing']].map(([l,h])=>(
               <a key={l} href={h} style={{color:C.muted,textDecoration:'none'}} onMouseEnter={e=>e.target.style.color=C.text} onMouseLeave={e=>e.target.style.color=C.muted}>{l}</a>
             ))}
           </div>
@@ -803,7 +803,7 @@ export default function Home(){
         <div ref={probRef} style={{padding:'80px 24px',borderBottom:`1px solid ${C.border}`}}>
           <div style={{maxWidth:920,margin:'0 auto'}}>
             <div style={{textAlign:'center',marginBottom:48,...anim(probV)}}>
-              <div style={{fontSize:10,fontWeight:700,color:C.gold,letterSpacing:'0.14em',textTransform:'uppercase',marginBottom:14}}>The Problem</div>
+              <div style={{fontSize:13,fontWeight:800,color:C.gold,letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:14}}>The Problem</div>
               <h2 style={{fontSize:'clamp(28px,4vw,44px)',fontWeight:900,letterSpacing:'-1.2px',marginBottom:14}}>Generic tools for generic creators.</h2>
               <p style={{fontSize:15,color:C.muted,maxWidth:520,margin:'0 auto',lineHeight:1.7}}>Your niche has specific terminology, compliance issues, seasonal patterns, and audience behavior that generic tools completely ignore.</p>
             </div>
@@ -825,7 +825,7 @@ export default function Home(){
             <div style={{fontSize:10,fontWeight:700,color:C.gold,letterSpacing:'0.14em',textTransform:'uppercase',marginBottom:14}}>How It Works</div>
             <h2 style={{fontSize:'clamp(26px,3.8vw,42px)',fontWeight:900,letterSpacing:'-1.2px',marginBottom:48}}>Three steps. Zero effort on your end.</h2>
             <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:0}}>
-              {[['01','🔒','Set your niche','Tell us your focus. 30 seconds.'],['02','🔭','We scan weekly','We monitor 10+ channels, detect outliers, extract patterns.'],['03','📬','Monday at 7am','Full brief in your inbox. Script, thumbnail, calendar, Shorts, competitor pulse. Done.']].map(([n,icon,title,desc],i,a)=>(
+              {[['01','🔒','Set your niche','Tell us your focus. 30 seconds.'],['02','🔭','We scan weekly','We monitor 10+ channels, detect outliers, extract patterns.'],['03','📬','Monday at 7am','13 sections in your inbox. Script hook, thumbnail blueprint, 4-week calendar, Shorts, competitor pulse, title variants, upload checklist, repurposing, and monetization angle. Done.']].map(([n,icon,title,desc],i,a)=>(
                 <div key={n} style={{padding:'28px',borderRight:i<a.length-1?`1px solid ${C.border}`:'none'}}>
                   <div style={{fontSize:48,fontWeight:900,color:C.goldDim,letterSpacing:'-3px',lineHeight:1,marginBottom:14}}>{n}</div>
                   <div style={{fontSize:24,marginBottom:12}}>{icon}</div>
@@ -867,8 +867,8 @@ export default function Home(){
             {briefData&&<MondayBriefEmail data={briefData} niche={niche} active={animActive}/>}
             {briefData&&(
               <div style={{textAlign:'center',marginTop:28,padding:'22px',backgroundColor:C.goldDim,border:`1px solid ${C.goldBorder}`,borderRadius:12}}>
-                <div style={{fontSize:15,fontWeight:800,color:C.gold,marginBottom:6}}>This hits your inbox every Monday at 7am.</div>
-                <div style={{fontSize:13,color:C.mid,marginBottom:16}}>Join the preview list to be in the first batch at intel.downrangeco.com.</div>
+                <div style={{fontSize:15,fontWeight:800,color:C.gold,marginBottom:6}}>All 13 sections hit your inbox every Monday at 7am.</div>
+                <div style={{fontSize:13,color:C.mid,marginBottom:16}}>Script hook, thumbnail, calendar, Shorts, competitor pulse, title variants, repurposing, monetization angle — and more. Join the preview list.</div>
                 <button style={btnP} onClick={()=>document.getElementById('access')?.scrollIntoView({behavior:'smooth'})}>Request Early Access →</button>
               </div>
             )}
@@ -895,17 +895,17 @@ export default function Home(){
           <div style={{maxWidth:960,margin:'0 auto'}}>
             <div style={{textAlign:'center',marginBottom:44,...anim(suiteV)}}>
               <div style={{fontSize:10,fontWeight:700,color:C.gold,letterSpacing:'0.14em',textTransform:'uppercase',marginBottom:14}}>The Suite</div>
-              <h2 style={{fontSize:'clamp(26px,3.8vw,42px)',fontWeight:900,letterSpacing:'-1.2px'}}>Four tools. One niche.</h2>
+              <h2 style={{fontSize:'clamp(26px,3.8vw,42px)',fontWeight:900,letterSpacing:'-1.2px'}}>Everything you need. One niche.</h2>
             </div>
             <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gridTemplateRows:'auto auto',gap:14}}>
               <div className="ch" style={{...anim(suiteV),gridColumn:'1',gridRow:'1/3',backgroundColor:C.s1,border:`1px solid ${C.goldBorder}`,borderRadius:12,padding:'28px 24px',display:'flex',flexDirection:'column',position:'relative',overflow:'hidden'}}>
                 <div style={{position:'absolute',top:0,right:0,backgroundColor:C.gold,color:'#000',fontSize:9,fontWeight:800,letterSpacing:'0.1em',padding:'4px 11px',borderRadius:'0 12px 0 8px'}}>FLAGSHIP</div>
                 <div style={{fontSize:32,marginBottom:16}}>📬</div>
                 <div style={{fontSize:18,fontWeight:800,color:C.text,marginBottom:4}}>Monday Brief</div>
-                <div style={{fontSize:11,color:C.green,marginBottom:18}}>Preview pricing TBA · founding members first</div>
+                <div style={{fontSize:11,color:C.green,marginBottom:18}}>Brief Lite $9.99/mo · Brief Full $29/mo · founding rates</div>
                 <div style={{fontSize:13,color:C.muted,lineHeight:1.65,marginBottom:20,flex:1}}>Your complete weekly intelligence brief for any outdoor niche — deer hunting, archery, CCW, waterfowl. Script hook, thumbnail blueprint, 4-week calendar, Shorts ideas, competitor pulse, trending questions, and seasonal alerts. Every Monday at 7am.</div>
                 <div style={{display:'flex',flexDirection:'column',gap:8}}>
-                  {['Niche outlier scan (5 videos)','Script hook — read it on camera','Real thumbnail blueprint + guide','4-week content calendar','Competitor pulse (3 channels)','3 Shorts repurpose ideas','Trending audience questions','Seasonal opportunity alerts','Niche health score weekly'].map(f=>(
+                  {['Your video this week — title, timing, viral score','Script hook — read it on camera','Real thumbnail blueprint + build guide','4-week content calendar','Competitor pulse — 3 channels tracked','3 Shorts repurpose ideas','Trending audience questions','Seasonal opportunity alerts','3 title variants with A/B guidance','Pre-publish upload checklist + pin comment','Content repurposing — blog, social, newsletter, Reddit','Monetization angle + on-camera CTA script','Niche health score + weekly trend'].map(f=>(
                     <div key={f} style={{display:'flex',gap:8,alignItems:'flex-start'}}>
                       <span style={{color:C.gold,fontSize:11,marginTop:1,flexShrink:0}}>✓</span>
                       <span style={{fontSize:12,color:C.mid}}>{f}</span>
@@ -913,9 +913,9 @@ export default function Home(){
                   ))}
                 </div>
               </div>
-              {[{icon:'🔭',name:'Niche Intel',desc:'On-demand outlier dashboard. Scan any niche, track competitors, title formula library, content gap analysis.'},
-                {icon:'🤝',name:'Sponsor Deals',desc:'Rate calculator, media kit generator, brand pitch CRM. Know your worth. Pitch outdoor and firearms brands.'},
-                {icon:'🏷️',name:'Brand Directory',desc:'For outdoor & firearms brands: find, vet, and contact 400+ verified YouTube creators across hunting, archery, CCW, and outdoor niches. Direct access, no agency.'}].map(({icon,name,desc},i)=>(
+              {[{icon:'🔭',name:'Niche Intel',price:'$49/mo',desc:'On-demand outlier dashboard. Scan any niche at any time, track competitors, access the title formula library, and get real-time content gap alerts.'},
+                {icon:'🤝',name:'Sponsor Deals',price:'Coming soon',desc:'Rate calculator, media kit generator, and brand pitch CRM. Know your worth. Pitch outdoor and firearms brands directly.'},
+                {icon:'🏷️',name:'Brand Directory',price:'Coming soon',desc:'For outdoor & firearms brands: find, vet, and contact verified YouTube creators across hunting, archery, CCW, and outdoor niches. Direct access, no agency.'}].map(({icon,name,desc},i)=>(
                 <div key={name} className="ch" style={{...anim(suiteV,.1+i*.06),backgroundColor:C.s1,border:`1px solid ${C.border}`,borderRadius:12,padding:'22px 20px'}}>
                   <div style={{fontSize:26,marginBottom:12}}>{icon}</div>
                   <div style={{fontSize:16,fontWeight:800,color:C.text,marginBottom:6}}>{name}</div>
