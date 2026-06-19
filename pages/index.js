@@ -778,26 +778,29 @@ export default function Home(){
       <div style={{minHeight:'100vh',backgroundColor:C.bg}}>
 
         {/* TICKER */}
-        <div style={{backgroundColor:'#08090D',borderBottom:`1px solid ${C.border}`,padding:'9px 0',overflow:'hidden'}}>
+        <div style={{backgroundColor:'#08090D',borderBottom:`1px solid ${C.border}`,padding:'9px 0',overflow:'hidden',display:isMobile?'none':'block'}}>
           <div style={{display:'flex',gap:60,whiteSpace:'nowrap',animation:'ticker 36s linear infinite',fontSize:11,color:C.mid}}>
             {[...TICKER,...TICKER].map((t,i)=><span key={i} style={{flexShrink:0}}>{t}</span>)}
           </div>
         </div>
 
         {/* NAV */}
-        <nav style={{borderBottom:`1px solid ${C.border}`,padding:'15px 36px',display:'flex',alignItems:'center',justifyContent:'space-between',position:'sticky',top:0,backgroundColor:`${C.bg}F4`,backdropFilter:'blur(16px)',zIndex:50}}>
-          <a href='/' style={{display:'flex',alignItems:'center',textDecoration:'none'}}>
-            <img src='/logo-sm.png' alt='DownRange Co. Intelligence Data' style={{height:36,width:'auto'}}/>
-          </a>
-          <div style={{display:'flex',gap:32,fontSize:13,color:C.muted,letterSpacing:'0.01em'}}>
-            {[['Demo','#demo'],['Compare','#compare'],['Pricing','#pricing']].map(([l,h])=>(
-              <a key={l} href={h} style={{color:C.muted,textDecoration:'none'}} onMouseEnter={e=>e.target.style.color=C.text} onMouseLeave={e=>e.target.style.color=C.muted}>{l}</a>
-            ))}
-          </div>
-          <button style={btnP} onClick={()=>document.getElementById('access')?.scrollIntoView({behavior:'smooth'})}>
-            Request Early Access →
-          </button>
-        </nav>
+        {isMobile
+          ? <MobileNav onCTA={()=>document.getElementById('access')?.scrollIntoView({behavior:'smooth'})}/>
+          : <nav style={{borderBottom:`1px solid ${C.border}`,padding:'15px 36px',display:'flex',alignItems:'center',justifyContent:'space-between',position:'sticky',top:0,backgroundColor:`${C.bg}F4`,backdropFilter:'blur(16px)',zIndex:50}}>
+              <a href='/' style={{display:'flex',alignItems:'center',textDecoration:'none'}}>
+                <img src='/logo-sm.png' alt='DownRange Co. Intelligence Data' style={{height:36,width:'auto'}}/>
+              </a>
+              <div style={{display:'flex',gap:32,fontSize:13,color:C.muted,letterSpacing:'0.01em'}}>
+                {[['Demo','#demo'],['Compare','#compare'],['Pricing','#pricing']].map(([l,h])=>(
+                  <a key={l} href={h} style={{color:C.muted,textDecoration:'none'}} onMouseEnter={e=>e.target.style.color=C.text} onMouseLeave={e=>e.target.style.color=C.muted}>{l}</a>
+                ))}
+              </div>
+              <button style={btnP} onClick={()=>document.getElementById('access')?.scrollIntoView({behavior:'smooth'})}>
+                Request Early Access →
+              </button>
+            </nav>
+        }
 
         {/* HERO */}
         <div style={{position:'relative',overflow:'hidden',borderBottom:`1px solid ${C.border}`}}>
